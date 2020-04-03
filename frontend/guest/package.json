@@ -1,0 +1,24 @@
+{
+  "name": "guest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "tslint -c ../../tslint.json 'src/**/*.ts'",
+    "build": "tsc && webpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "socket.io": "^2.3.0",
+    "whatwg-fetch": "^3.0.0"
+  },
+  "devDependencies": {
+    "uglifyjs": "^2.4.11",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  }
+}

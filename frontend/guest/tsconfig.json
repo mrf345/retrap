@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es5",
+        "moduleResolution": "node",
+        "removeComments": true,
+        "rootDir": "src/",
+        "outDir": "build/",
+        "sourceMap": true,
+        "declaration": true
+    }
+}

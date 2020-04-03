@@ -1,0 +1,63 @@
+{
+  "name": "retrap",
+  "version": "0.1.0",
+  "description": "Open-Source intelligence OSINT tracking and analysis tool. Inspired by Trape.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "(cd frontend/guest/ && npm i .) && (cd frontend/host/ && npm i .)",
+    "lint": "tslint -c tslint.json '{src,bin}/**/*.ts' && (cd frontend/guest/ && npm run lint) && (cd frontend/host/ && npm run lint)",
+    "build": "rm -rf build/* && tsc && (cd frontend/guest/ && npm run build) && (cd frontend/host/ && npm run build && cp -rf build/* ../../build/frontend/)",
+    "start": "node --inspect build/bin/index.js",
+    "pkg": "pkg package.json --out-path dist/ # Make sure to run `nvm use` first"
+  },
+  "bin": {
+    "retrap": "build/bin/index.js"
+  },
+  "pkg": {
+    "assets": [
+      "build/frontend/**/*"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrf345/retrap.git"
+  },
+  "keywords": [
+    "tracking",
+    "analysis",
+    "intelligence",
+    "OSINT",
+    "trape"
+  ],
+  "author": "Mohamed Feddad",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mrf345/retrap/issues"
+  },
+  "homepage": "https://github.com/mrf345/retrap#readme",
+  "devDependencies": {
+    "@types/cheerio": "^0.22.17",
+    "@types/cli-box": "^6.0.0",
+    "@types/express": "^4.17.3",
+    "@types/mime-types": "^2.1.0",
+    "@types/morgan": "^1.9.0",
+    "@types/node-fetch": "^2.5.5",
+    "pkg": "^4.4.5",
+    "tslint": "^6.1.0",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "chalk": "^3.0.0",
+    "cheerio": "^1.0.0-rc.3",
+    "cli-box": "^6.0.9",
+    "express": "^4.17.1",
+    "is-elevated": "^3.0.0",
+    "is-port-reachable": "^3.0.0",
+    "meow": "^6.1.0",
+    "mime-types": "^2.1.26",
+    "morgan": "^1.10.0",
+    "node-fetch": "^2.6.0",
+    "socket.io": "^2.3.0",
+    "uuidv4": "^6.0.7"
+  }
+}

@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es2017",
+        "moduleResolution": "node",
+        "removeComments": true,
+        "outDir": "build/",
+        "sourceMap": true,
+        "declaration": false,
+        "resolveJsonModule": true
+    },
+    "exclude": ["frontend/", "build/"]
+}
