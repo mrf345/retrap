@@ -1,7 +1,8 @@
 {
     "compilerOptions": {
         "module": "commonjs",
-        "target": "es2017",
+        "target": "es2015",
+        "lib": ["ES2015", "DOM"],
         "moduleResolution": "node",
         "removeComments": true,
         "outDir": "build/",

@@ -25,19 +25,21 @@ export default class FakeBrowser {
     defaultLink:string
     timeout:number
     retries:number
+    maxRetries:number
     cacheDir:string
 
-    constructor(serverUrl:string, cacheDir:string, defaultLink:string, retries = 2, timeout = 30000) {
+    constructor(serverUrl:string, cacheDir:string, defaultLink:string, retries = 2, timeout = 30) {
         this.serverUrl = serverUrl
         this.cacheDir = cacheDir
         this.defaultLink = defaultLink
         this.timeout = timeout
         this.retries = retries
+        this.maxRetries = retries * 2
         this.tries = {}
         this.cache = {}
     }
 
-    private async callAndCache(link:string, reqHeaders:any, timeout = 30000) {
+    private async callAndCache(link:string, reqHeaders:any) {
         const contentType = 'text/html; charset=UTF-8'
         const cacheName = `/${uuid()}.html`
 
@@ -48,7 +50,7 @@ export default class FakeBrowser {
             'Accept-language': reqHeaders['accept-language']
         }
         const content = await <Promise<string>>Promise.race([
-            new Promise((_, r) => setTimeout(() => r('Timeout'), timeout)),
+            new Promise((_, r) => setTimeout(() => r('Timeout'), this.timeout * 1000)),
             fetch(link, {headers}).then((r:any) => r.text())
         ])
 
@@ -113,7 +115,7 @@ export default class FakeBrowser {
         }
 
         try {
-            const { content, cacheName, cachePath } = await this.callAndCache(link, headers, this.timeout)
+            const { content, cacheName, cachePath } = await this.callAndCache(link, headers)
 
             FS.writeFileSync(cachePath, this.parseHTMLContent(link, content))
             return this.cache[link] = cacheName
@@ -124,6 +126,7 @@ export default class FakeBrowser {
             const counter = this.tries[link] || 1
             this.tries[link] = counter + 1
 
+            if (this.tries[link] > this.maxRetries) throw err
             return this.tries[link] >= this.retries
                 ? this.get(this.defaultLink, headers)
                 : this.get(link, headers)

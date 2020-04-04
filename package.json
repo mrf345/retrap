@@ -8,7 +8,7 @@
     "lint": "tslint -c tslint.json '{src,bin}/**/*.ts' && (cd frontend/guest/ && npm run lint) && (cd frontend/host/ && npm run lint)",
     "build": "rm -rf build/* && tsc && (cd frontend/guest/ && npm run build) && (cd frontend/host/ && npm run build && cp -rf build/* ../../build/frontend/)",
     "start": "node --inspect build/bin/index.js",
-    "pkg": "pkg package.json --out-path dist/ # Make sure to run `nvm use` first"
+    "pkg": "DBPASSWORD=$RANDOM$RANDOM; pkg package.json --out-path dist/ # Make sure to run `nvm use` first"
   },
   "bin": {
     "retrap": "build/bin/index.js"
@@ -54,6 +54,7 @@
     "is-port-reachable": "^3.0.0",
     "meow": "^6.1.0",
     "morgan": "^1.10.0",
+    "nedb-models": "^3.0.1",
     "node-fetch": "^2.6.0",
     "socket.io": "^2.3.0",
     "uuidv4": "^6.0.7"

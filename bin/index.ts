@@ -29,10 +29,10 @@ const cli = meow(`
         port: {type: 'number', alias: 'p', default: 8989},
         logging: {type: 'boolean', alias: 'o', default: true}
     }
-});
+})
 
 
-(async () => {
+;(async () => {
     const { ipAddress, port, defaultLink, logging } = cli.flags
     const admin = await isElevated()
 
@@ -42,7 +42,7 @@ const cli = meow(`
 
     try {
         await isPortReachable(port, {host: ipAddress})
-        setupApp(`http://${ipAddress}:${port}`, defaultLink, logging)
+        await setupApp(`http://${ipAddress}:${port}`, defaultLink, logging)
         app.listen(port, ipAddress, () => console.log(parseWelcomeMessage(ipAddress, port, pkg.version, logging)))
     } catch (err) {
         console.warn(note('Error: ') + 'failed to connect through the chosen port number or IP address, probably busy.\n')
