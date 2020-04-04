@@ -80,7 +80,7 @@ export function resolveRelativeUrl (url:string, remoteUrl:string, www = false):s
 }
 
 
-export function localizeExternalUrl(url:string, remoteUrl:string, localUrl:string) {
+export function localizeExternalUrl (url:string, remoteUrl:string, localUrl:string) {
     if (/^#|javascritp/.test(url)) return url
     if (url.startsWith('//')) return 'http:' + url
 
@@ -95,7 +95,7 @@ export function localizeExternalUrl(url:string, remoteUrl:string, localUrl:strin
 
 
 export function cloneElement (element:any):any {
-    const newElement = <HTMLLinkElement>element.cloneNode(false)
+    const newElement:HTMLLinkElement = element.cloneNode(false)
 
     while (element.hasChildNodes()) newElement.appendChild(element.firstChild)
     element.parentNode.replaceChild(newElement, element)
