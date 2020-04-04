@@ -29,8 +29,8 @@
     "OSINT",
     "trape"
   ],
-  "author": "Mohamed Feddad",
-  "license": "MIT",
+  "author": "mrf345",
+  "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/mrf345/retrap/issues"
   },
