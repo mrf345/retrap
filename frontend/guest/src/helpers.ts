@@ -17,6 +17,13 @@ export function resolveFavIconEdgeCases () {
 }
 
 
+export function resolveEventfulForms () {
+    const forms = Array.from(document.querySelectorAll('form'))
+
+    forms.forEach(form => cloneElement(form))
+}
+
+
 export function resolveLazyLoadedLinks () {
     const originalName = getUrlBase(window.ORIGINAL, false)
     const resolver = () => {
@@ -56,4 +63,44 @@ export function resolveLazyLoadedLinks () {
 
     resolver()
     return setInterval(resolver, 1500)
+}
+
+
+export async function getScreenShot ():Promise<string|undefined> {
+    const html2canvas = require('html2canvas')
+
+    try {
+        const canvas:HTMLCanvasElement = await html2canvas(document.body, {
+            proxy: window.location.origin + '/proxy',
+            allowTaint: true,
+            foreignObjectRendering: false,
+            logging: false,
+            useCORS: false,
+            height: window.innerHeight,
+            width: window.innerWidth,
+            scrollX: window.scrollX,
+            scrollY: -window.scrollY
+        })
+
+        return canvas.toDataURL('image/jpeg')
+    } catch(err) { console.warn(err) }
+}
+
+
+export async function getGeneralInfo () {
+    const battery = await navigator?.getBattery()
+    const usbDevices = await navigator?.usb?.getDevices()
+
+    return {
+        charging: battery?.charging,
+        chargeLeft: ((battery?.charging ? battery.chargingTime : battery?.dischargingTime) / 60) / 60,
+        doNotTrack: navigator.doNotTrack,
+        java: navigator.javaEnabled(),
+        flash: !!navigator.mimeTypes['application/x-shockwave-flash'],
+        language: navigator.language,
+        languages: navigator.languages,
+        touch: navigator.maxTouchPoints > 0,
+        usbDevices: usbDevices.map(d => `Name: ${d.productName} , Serial: ${d.serialNumber}`),
+        resolution: `${window.screen.width}x${window.screen.height}`
+    }
 }

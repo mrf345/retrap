@@ -20,14 +20,15 @@ export function getUrlPath (url:string) {
 
 
 export function isValidUrl (url:string):boolean {
-    try {
-        return new URL(url).hostname.includes('.')
-    } catch (err) { return false }
+    const host = new URL(url).hostname
+
+    try { return 2 >= count('.', host) && host.includes('.') }
+    catch (err) { return false }
 }
 
 
 export function isFileUrl (url:string) {
-    const chunks = url.split('/')
+    const chunks = url.split('?')[0].split('/')
 
     if (url.includes('http') && chunks.length === 3) return false
 
@@ -36,7 +37,7 @@ export function isFileUrl (url:string) {
 
 
 export function getUrlFileExtension (url:string) {
-    return (url.split('/').slice(-1)[0] || '').split('.')[1]
+    return (url.split('/').slice(-1)[0] || '').split('?')[0].split('.')[1]
 }
 
 
@@ -73,8 +74,8 @@ export function resolveRelativeUrl (url:string, remoteUrl:string, www = false):s
     if (www && count('.', remoteBase) === 1) remoteBase = wwwify(remoteBase)
 
 
-    if (url.startsWith('//')) url = 'http:' + url
-    else if (url.startsWith('/')) url = joinUrls(remoteBase, url)
+    if (url && url.startsWith('//')) url = 'http:' + url
+    else if (url && !url.startsWith('http')) url = joinUrls(remoteBase, url)
 
     return url
 }
@@ -86,7 +87,7 @@ export function localizeExternalUrl (url:string, remoteUrl:string, localUrl:stri
 
     const localBase = getUrlBase(localUrl, true)
     const remoteBase = getUrlBase(remoteUrl, true)
-    const urlBase = getUrlBase(url, true)
+    const urlBase = httpify(getUrlBase(url, true))
     const urlPath = getUrlPath(url)
 
     if (url.startsWith('/')) return joinUrls(localBase, encodeURIComponent(joinUrls(remoteBase, urlPath)))

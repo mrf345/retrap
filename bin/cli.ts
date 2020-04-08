@@ -4,7 +4,7 @@ import isElevated = require('is-elevated')
 
 import * as pkg from '../package.json'
 import { parseWelcomeMessage } from './welcome'
-import { app, setupApp } from '../src/index'
+import { app, setupApp } from '../src/app'
 import { bold, command, param, note } from './styles'
 
 
@@ -15,16 +15,14 @@ const cli = meow(`
 
     ${bold('Options')}
 
-        ${param('--default-link, -l')} Default link to redirect traffic to ${note('(http://www.google.com)')}
         ${param('--ip-address, -i')} IP address to stream server on        ${note('(127.0.0.1)')}
-        ${param('--port, -p')} Port to stream server through               ${note('(9898)')}
+        ${param('--port, -p')} Port to stream server through               ${note('(8989)')}
         ${param('--logging, -o')} Display http requests logs               ${note('(true)')}
 
     ${bold('Example')}
 
         ${command('$')} ${pkg.name} ${command('--port')} 8080 ${command('-l')} http://github.com
 `, {flags: {
-        defaultLink: {type:'string', alias: 'l', default: 'http://google.com'},
         ipAddress: {type: 'string', alias: 'i', default: '127.0.0.1'},
         port: {type: 'number', alias: 'p', default: 8989},
         logging: {type: 'boolean', alias: 'o', default: true}
@@ -42,7 +40,7 @@ const cli = meow(`
 
     try {
         await isPortReachable(port, {host: ipAddress})
-        await setupApp(`http://${ipAddress}:${port}`, defaultLink, logging)
+        await setupApp(`http://${ipAddress}:${port}`, logging)
         app.listen(port, ipAddress, () => console.log(parseWelcomeMessage(ipAddress, port, pkg.version, logging)))
     } catch (err) {
         console.warn(note('Error: ') + 'failed to connect through the chosen port number or IP address, probably busy.\n')

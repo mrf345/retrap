@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "html2canvas": "^1.0.0-rc.5",
     "socket.io": "^2.3.0",
     "whatwg-fetch": "^3.0.0"
   },

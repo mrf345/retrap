@@ -1,4 +1,5 @@
 declare module 'is-port-reachable'
+declare module 'html2canvas-proxy'
 declare module 'nedb-models' {
     class Model {
         static find<T>(query: any, projection?: {[p in keyof T]?:number}): Nedb.Cursor<(T & Document)[]>
@@ -155,8 +156,14 @@ interface Window {
     ORIGINAL:string
 }
 
+interface Navigator {
+  getBattery?:() => Promise<any>
+  usb:any
+}
+
 
 interface Setting {
+    defaultLink:string
     timeout:number
     retries:number
     apiKeys: {

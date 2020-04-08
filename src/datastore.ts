@@ -10,12 +10,33 @@ if (!FS.existsSync(storagePath)) FS.mkdirSync(storagePath, {recursive: true})
 const encryption = () => ({password: PASSWORD, algorithm: 'aes256'})
 
 
+interface Post {
+    path:string
+    date:Date
+    data:any
+}
+
+
 export class Guest extends Model {
-    ips:string[] = []
-    os = ''
-    browser = ''
-    browserEngine = ''
-    cpuArch = ''
+    ip:string
+    os:string
+    browser:string
+    browserEngine:string
+    cpuArch:string
+    posts:Post[]
+    logs:any[]
+
+    async add(ip:string, os:string, browser:string, browserEngine:string, cpuArch:string, posts = [], logs = []):Promise<Guest> {
+        this.ip = ip
+        this.os = os
+        this.browser = browser
+        this.browserEngine = browserEngine
+        this.cpuArch = cpuArch
+        this.posts = posts
+        this.logs = logs
+
+        return await this.save()
+    }
 
     static encryption = encryption
     static datastore() {
@@ -25,9 +46,19 @@ export class Guest extends Model {
 
 
 export class Setting extends Model {
-    timeout = 30
-    retries = 2
-    ngrokApiKey = ''
+    defaultLink:string
+    timeout:number
+    retries:number
+    ngrokApiKey:string
+
+    async add(defaultLink = 'http://google.com', timeout = 30, retries = 2, ngrokApiKey = ''):Promise<Setting> {
+        this.defaultLink = defaultLink
+        this.timeout = timeout
+        this.retries = retries
+        this.ngrokApiKey = ngrokApiKey
+
+        return await this.save()
+    }
 
     static encryption = encryption
     static datastore() {
