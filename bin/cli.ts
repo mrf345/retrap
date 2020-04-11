@@ -4,7 +4,7 @@ import isElevated = require('is-elevated')
 
 import * as pkg from '../package.json'
 import { parseWelcomeMessage } from './welcome'
-import { app, setupApp } from '../src/app'
+import { server, setupAppAndIO } from '../src/app'
 import { bold, command, param, note } from './styles'
 
 
@@ -40,8 +40,8 @@ const cli = meow(`
 
     try {
         await isPortReachable(port, {host: ipAddress})
-        await setupApp(`http://${ipAddress}:${port}`, logging)
-        app.listen(port, ipAddress, () => console.log(parseWelcomeMessage(ipAddress, port, pkg.version, logging)))
+        await setupAppAndIO(`http://${ipAddress}:${port}`, logging)
+        server.listen(port, ipAddress, () => console.log(parseWelcomeMessage(ipAddress, port, pkg.version, logging)))
     } catch (err) {
         console.warn(note('Error: ') + 'failed to connect through the chosen port number or IP address, probably busy.\n')
         console.log(err, '\n')

@@ -47,7 +47,7 @@ class Browser {
 }
 
 
-export default class FakeBrowser {
+export default class ParallelBrowser {
     tries:Tries
     cache:Cache
     app:any
@@ -87,7 +87,7 @@ export default class FakeBrowser {
     }
 
     private async fetchAndCache(link:string, reqHeaders:any, sessionId:string) {
-        const cacheName = `/${uuid().split('-').join()}.html`
+        const cacheName = `/${uuid().split('-').join('')}.html`
         const cachePath = Path.join(this.cacheDir, cacheName)
         const browser = await (this.browsers[sessionId] || new Browser(sessionId)).get()
         const page = await browser.newPage()
@@ -127,6 +127,9 @@ export default class FakeBrowser {
             const href = $(e).attr('href')
 
             if (href) $(e).attr('href', localizeExternalUrl(href, link, this.serverUrl))
+            $(e).removeAttr('onclick')
+            $(e).removeAttr('onmousedown')
+            $(e).removeAttr('onmouseup')
         })
 
         $('meta[itemprop="image"]').each((i, e) => {

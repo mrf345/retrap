@@ -12,13 +12,19 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/polyfill": "^7.8.7",
+    "@babel/preset-env": "^7.9.5",
+    "babel-loader": "^8.1.0",
     "html2canvas": "^1.0.0-rc.5",
     "socket.io": "^2.3.0",
+    "socket.io-client": "^2.3.0",
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@types/socket.io-client": "^1.4.32",
+    "terser-webpack-plugin": "^2.3.5",
     "uglifyjs": "^2.4.11",
-    "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11"
   }

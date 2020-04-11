@@ -44,6 +44,7 @@
     "@types/morgan": "^1.9.0",
     "@types/node-fetch": "^2.5.5",
     "@types/puppeteer": "^2.0.1",
+    "@types/socket.io": "^2.1.4",
     "@types/ua-parser-js": "^0.7.33",
     "pkg": "^4.4.5",
     "tslint": "^6.1.0",

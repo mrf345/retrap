@@ -1,5 +1,7 @@
 declare module 'is-port-reachable'
 declare module 'html2canvas-proxy'
+declare module '@babel/polyfill'
+
 declare module 'nedb-models' {
     class Model {
         static find<T>(query: any, projection?: {[p in keyof T]?:number}): Nedb.Cursor<(T & Document)[]>
@@ -152,9 +154,16 @@ declare module 'nedb-models' {
     const Timestamps:any
 }
 
+
+interface ObjectConstructor {
+  fromEntries(xs: any): object
+}
+
+
 interface Window {
     ORIGINAL:string
 }
+
 
 interface Navigator {
   getBattery?:() => Promise<any>
@@ -178,4 +187,46 @@ interface Guest {
     browser:string
     browserEngine:string
     cpuArch:string
+}
+
+
+interface GeneralInfo {
+  userAgent:string
+  charging:boolean
+  chargeLeft:string
+  doNotTrack:string
+  java:boolean
+  flash:boolean
+  language:string
+  languages:readonly string[]
+  touch:boolean
+  usbDevices:string[]
+  resolution:string
+  cpuCors:number
+}
+
+
+interface Sessions {
+  facebook:boolean
+  youtube:boolean
+  gmail:boolean
+  spotify:boolean
+  github:boolean
+  instagram:boolean
+  snapchat:boolean
+  airbnb:boolean
+}
+
+
+interface Post {
+  path:string
+  date:Date
+  data:any
+}
+
+
+interface KeyLog {
+  url:string
+  date:Date
+  log:string
 }

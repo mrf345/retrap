@@ -102,3 +102,10 @@ export function cloneElement (element:any):any {
     element.parentNode.replaceChild(newElement, element)
     return newElement
 }
+
+
+export function wait (seconds:number):Promise<null> {
+    return new Promise(resolve => {
+        setTimeout(() => resolve(), seconds * 1000)
+    })
+}
