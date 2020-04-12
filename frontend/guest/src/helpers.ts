@@ -103,8 +103,7 @@ export async function getActiveSessions ():Promise<any> {
         'snapchat': (
             'http://accounts.snapchat.com/accounts/login?continue=https://accounts.snapchat.com/accounts' +
             '/static/images/favicon/favicon.png'),
-        'airbnb': 'http://www.airbnb.com/login?redirect_url=%2Ffavicon.ico',
-        'twitch': 'http://www.twitch.tv/login?redirect_on_login=/favicon.ico'
+        'airbnb': 'http://www.airbnb.com/login?redirect_url=%2Ffavicon.ico'
     }
 
     return Object
