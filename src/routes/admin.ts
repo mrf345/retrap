@@ -6,7 +6,7 @@ const router = Router()
 
 router.get('/', async (req, resp) => {
     resp.status(200)
-        .sendFile(Path.resolve(__dirname, '../frontend/index.html'))
+        .sendFile(Path.resolve(__dirname, '../../frontend/index.html'))
 })
 
 
