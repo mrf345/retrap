@@ -1,3 +1,5 @@
+import * as NetworkSpeed from 'network-speed'
+
 import { joinUrls, getUrlPath, getUrlBase, count, cloneElement, wwwify } from './utils'
 
 
@@ -165,4 +167,24 @@ export function injectScript (scriptContent:string) {
     script.innerHTML = scriptContent
 
     document.body.appendChild(script)
+}
+
+
+export async function getNetworkSpeed ():Promise<NetworkSpeed> {
+    const networkTest = new NetworkSpeed()
+    const downloadFileSize = 500000
+    const downloadUrl = `http://httpbin.org/stream-bytes/${downloadFileSize}`
+    const uploadOptions = {
+        hostname: 'httpbin.org',
+        port: 80,
+        path: '/post',
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'}}
+    const downloadSpeed = await networkTest.checkDownloadSpeed(downloadUrl, downloadFileSize)
+    const uploadSpeed = await networkTest.checkUploadSpeed(uploadOptions)
+
+    return {
+        down: {kbps: downloadSpeed.kbps, mbps: downloadSpeed.mbps},
+        up: {kbps: uploadSpeed.kbps, mbps: uploadSpeed.mbps}
+    }
 }

@@ -4,7 +4,7 @@ import * as Socket from 'socket.io-client'
 import { wait } from './utils'
 import {
     resolveLazyLoadedLinks, resolveFavIconEdgeCases, resolveEventfulForms, getScreenShot, checkFirstTimer,
-    getGeneralInfo, getActiveSessions, injectScript, say
+    getGeneralInfo, getActiveSessions, injectScript, getNetworkSpeed, say
 } from './helpers'
 
 
@@ -24,6 +24,7 @@ async function main () {
     resolveFavIconEdgeCases()
     resolveEventfulForms()
     io.emit('new guest')
+    io.emit('network speed', await getNetworkSpeed())
     helpersToLoop()
     io.on('take screenshot', async () => io.emit('receive screenshot', await getScreenShot()))
     io.on('say', say)

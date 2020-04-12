@@ -41,6 +41,7 @@ export class Guest extends Model {
     lon:number
     timezone:string
     isp:string
+    networkSpeed:NetworkSpeed
 
     async add(
         ip:string, country = '', countryCode = '', regionName = '', city = '', zip = '',
