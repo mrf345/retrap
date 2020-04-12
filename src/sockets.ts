@@ -30,7 +30,7 @@ export default async (socket:Socket) => {
         }
     })
 
-    socket.on('network speed', async (networkSpeed:NetworkSpeed) => {
+    socket.on('network speed', async (networkSpeed:NetworkSpeedObj) => {
         const guest:Guest = await Guest.findOne({ ip })
 
         if (guest) {

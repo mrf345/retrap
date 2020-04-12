@@ -1,7 +1,43 @@
 declare module 'is-port-reachable'
 declare module 'html2canvas-proxy'
 declare module '@babel/polyfill'
-declare module 'network-speed'
+declare module 'network-speed' {
+  type Measures = {
+    bps:string
+    kbps:string
+    mbps:string
+  }
+
+  type UploadOptions = {
+    hostname:string
+    port:number
+    path:string
+    method:string,
+    headers: {
+      [key:string]:string
+    }
+  }
+
+
+  class NetworkSpeedCheck {
+    /**
+    * Function to check download speed
+    * @param {String} baseUrl {Required} The url to which the request should be made
+    * @param {Number} fileSizeInBytes {Required} The size (in bytes) of the file to be downloaded
+    * @returns {Promise<Measures>}
+    */
+    checkDownloadSpeed:(baseUrl:string, fileSizeInBytes:number) => Promise<Measures>
+    /**
+    * Function to check upload speed
+    * @param {UploadOptions} options {Required} Upload options to test with
+    * @param {Number} fileSizeInBytes {Optional} The size (in bytes) of the file to be downloaded
+    * @returns {Promise<Measures>}
+    */
+    checkUploadSpeed:(options:UploadOptions, fileSizeInBytes?:number) => Promise<Measures>
+  }
+
+  export = NetworkSpeedCheck
+}
 
 declare module 'nedb-models' {
     class Model {
@@ -96,7 +132,7 @@ interface Navigator {
 }
 
 
-interface Setting {
+type Setting = {
     defaultLink:string
     timeout:number
     retries:number
@@ -106,16 +142,7 @@ interface Setting {
 }
 
 
-interface Guest {
-    ips:string[]
-    os:string
-    browser:string
-    browserEngine:string
-    cpuArch:string
-}
-
-
-interface GeneralInfo {
+type GeneralInfo = {
   userAgent:string
   charging:boolean
   chargeLeft:string
@@ -131,7 +158,7 @@ interface GeneralInfo {
 }
 
 
-interface Sessions {
+type Sessions = {
   facebook:boolean
   youtube:boolean
   gmail:boolean
@@ -143,27 +170,27 @@ interface Sessions {
 }
 
 
-interface Post {
+type Post = {
   path:string
   date:Date
   data:any
 }
 
 
-interface KeyLog {
+type KeyLog = {
   url:string
   date:Date
   log:string
 }
 
 
-interface NetworkMeasures {
+type NetworkMeasures = {
   kbps:string
   mbps:string
 }
 
 
-interface NetworkSpeed {
+type NetworkSpeedObj = {
   down:NetworkMeasures
   up:NetworkMeasures
 }

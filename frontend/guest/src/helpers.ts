@@ -1,4 +1,4 @@
-import * as NetworkSpeed from 'network-speed'
+import NetworkSpeed = require('network-speed')
 
 import { joinUrls, getUrlPath, getUrlBase, count, cloneElement, wwwify } from './utils'
 
@@ -170,7 +170,7 @@ export function injectScript (scriptContent:string) {
 }
 
 
-export async function getNetworkSpeed ():Promise<NetworkSpeed> {
+export async function getNetworkSpeed ():Promise<NetworkSpeedObj> {
     const networkTest = new NetworkSpeed()
     const downloadFileSize = 500000
     const downloadUrl = `http://httpbin.org/stream-bytes/${downloadFileSize}`
