@@ -20,10 +20,11 @@ export function getUrlPath (url:string) {
 
 
 export function isValidUrl (url:string):boolean {
-    const host = new URL(url).hostname
     const fileExtensions = ['.js', '.js.map', '.css', '.html']
 
     try {
+        const host = new URL(url).hostname
+
         return 2 >= count('.', host) &&
             host.includes('.') &&
             !(new RegExp(`${fileExtensions.join('|')}$`).test(host))

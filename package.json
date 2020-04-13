@@ -8,7 +8,8 @@
     "lint": "tslint -c tslint.json '{src,bin}/**/*.ts' && (cd frontend/guest/ && npm run lint) && (cd frontend/host/ && npm run lint)",
     "build": "rm -rf build/* && tsc && (cd frontend/guest/ && npm run build) && (cd frontend/host/ && npm run build && cp -rf build/* ../../build/frontend/)",
     "start": "node build/bin/cli.js",
-    "pkg": "DBPASSWORD=$RANDOM$RANDOM; pkg package.json --out-path dist/ # Make sure to run `nvm use` first"
+    "pkg": "DBPASSWORD=$RANDOM$RANDOM; pkg package.json --out-path dist/ # Make sure to run `nvm use` first",
+    "docker": "npm i . && npm run build && echo 'this crap should be running' && npm run start"
   },
   "bin": {
     "retrap": "build/bin/cli.js"

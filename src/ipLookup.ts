@@ -31,7 +31,7 @@ export default async function ipLookup (ip:string):Promise<IpInfo> {
     let ipInfo:IpLookupAPIResponse
 
     try {
-        if (/localhost|127.0.0.1/.test(publicIp)) publicIp = await fetch('https://api.ipify.org/').then(r => r.text())
+        if (/localhost|127.0.0.1/.test(publicIp) || process.env.DOCKER) publicIp = await fetch('https://api.ipify.org/').then(r => r.text())
         ipInfo = await fetch(baseUrl += publicIp).then(r => r.json())
         if (ipInfo.status !== 'success') throw Error(`API failed to lookup ${baseUrl}`)
     } catch (err) {

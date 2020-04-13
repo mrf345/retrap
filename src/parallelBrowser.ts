@@ -42,7 +42,10 @@ class Browser {
 
         return this._browser
             ? this._browser
-            : this._browser = await puppeteer.launch({defaultViewport: {width: 1920, height: 1080}})
+            : this._browser = await puppeteer.launch({
+                defaultViewport: {width: 1920, height: 1080},
+                args: ['--no-sandbox']
+            })
     }
 }
 

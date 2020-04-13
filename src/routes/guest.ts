@@ -21,13 +21,12 @@ router.all('*', async (req, resp) => {
     if (!isValidUrl(link)) link = setting.defaultLink
     else guest.logs.push(`${req.method} - ${link} - ${new Date()}`)
 
-    const ipInfo = await ipLookup(ip) || {}
-
-    Object.entries(ipInfo)
-          .forEach(([key, value]) => guest[key] = value)
+    Object
+        .entries(await ipLookup(ip) || {})
+        .forEach(([key, value]) => guest[key] = value)
 
     if (req.method.toLowerCase() === 'post' && !link.startsWith(setting.defaultLink)) {
-        /* Storing in arrays intentionally, nedb-models fails with nested objects 🤷‍♂️ */
+        /* Storing in arrays intentionally, nedb-models fails with nested lengthy objects 🤷‍♂️ */
         const chunks = Object
             .entries(req.body)
             .filter(([key, value]) => !!value)

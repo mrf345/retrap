@@ -15,7 +15,7 @@ const cli = meow(`
 
     ${bold('Options')}
 
-        ${param('--ip-address, -i')} IP address to stream server on        ${note('(127.0.0.1)')}
+        ${param('--ip-address, -i')} IP address to stream server on        ${note('(0.0.0.0)')}
         ${param('--port, -p')} Port to stream server through               ${note('(8989)')}
         ${param('--logging, -o')} Display http requests logs               ${note('(true)')}
 
@@ -23,7 +23,7 @@ const cli = meow(`
 
         ${command('$')} ${pkg.name} ${command('--port')} 8080 ${command('-l')} http://github.com
 `, {flags: {
-        ipAddress: {type: 'string', alias: 'i', default: '127.0.0.1'},
+        ipAddress: {type: 'string', alias: 'i', default: '0.0.0.0'},
         port: {type: 'number', alias: 'p', default: 8989},
         logging: {type: 'boolean', alias: 'o', default: true}
     }

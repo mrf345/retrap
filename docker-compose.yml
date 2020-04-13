@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+    retrap:
+        image: buildkite/puppeteer:latest
+        working_dir: /home/node/app
+        volumes: 
+            - ./:/home/node/app
+        ports: 
+            - 8989:8989
+        environment: 
+            - DOCKER=true
+        command: npm run docker
