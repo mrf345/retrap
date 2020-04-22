@@ -3,7 +3,7 @@ import * as Box from 'cli-box'
 
 
 export const parseWelcomeMessage = (ip:string, port:number, version:string, logging:boolean|string) => {
-    let link = chalk.blue.underline(`http://${ip}:${port}/admin`)
+    let link = chalk.blue.underline(`http://${ip}:${port}`)
     const marks = {nw: "", n: "", ne: "", e: "", se: "", s: "", sw: "", w: ""}
     const separator = chalk.blue('│                                                                 │\n')
     version = `${version}`

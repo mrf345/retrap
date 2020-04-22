@@ -115,3 +115,10 @@ export function wait (seconds:number):Promise<null> {
         setTimeout(() => resolve(), seconds * 1000)
     })
 }
+
+
+export function getIdString(obj:any):string {
+    if (Array.isArray(obj)) return obj.join('')
+    else if (typeof obj === 'object') return Object.values(obj).join('')
+    else return `${obj}`
+}

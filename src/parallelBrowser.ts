@@ -22,6 +22,7 @@ interface Browsers {
 
 
 class Browser {
+    path:string
     limitMinutes:number
     lastAccess:Date
     private _browser:any
@@ -31,6 +32,17 @@ class Browser {
         this.limitMinutes = limitMinutes
         this.sessionId = sessionId
         this.lastAccess = new Date()
+        this.path = process.env.PUPPETEER_EXECUTABLE_PATH ||
+            (process.pkg
+              ? Path.join(
+                  Path.dirname(process.execPath),
+                  'puppeteer',
+                  ...puppeteer
+                    .executablePath()
+                    .split(Path.sep)
+                    .slice(6)
+                )
+              : puppeteer.executablePath())
     }
 
     get shouldCleanup () {
@@ -44,7 +56,8 @@ class Browser {
             ? this._browser
             : this._browser = await puppeteer.launch({
                 defaultViewport: {width: 1920, height: 1080},
-                args: ['--no-sandbox']
+                args: ['--no-sandbox'],
+                executablePath: this.path
             })
     }
 }

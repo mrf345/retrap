@@ -1,14 +1,14 @@
 {
   "name": "retrap",
   "version": "0.1.0",
-  "description": "Open-Source intelligence OSINT tracking and analysis tool. Inspired by Trape.",
+  "description": "Open-Source intelligence OSINT tracking and analysis tool.",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "(cd frontend/guest/ && npm i .) && (cd frontend/host/ && npm i .)",
-    "lint": "tslint -c tslint.json '{src,bin}/**/*.ts' && (cd frontend/guest/ && npm run lint) && (cd frontend/host/ && npm run lint)",
-    "build": "rm -rf build/* && tsc && (cd frontend/guest/ && npm run build) && (cd frontend/host/ && npm run build && cp -rf build/* ../../build/frontend/)",
+    "postinstall": "(cd frontend/guest/ && npm i .)",
+    "lint": "tslint -c tslint.json '{src,bin}/**/*.ts' && (cd frontend/guest/ && npm run lint)",
+    "build": "rm -rf build/* && tsc && (cd frontend/guest/ && npm run build)",
     "start": "node build/bin/cli.js",
-    "pkg": "DBPASSWORD=$RANDOM$RANDOM; pkg package.json --out-path dist/ # Make sure to run `nvm use` first",
+    "pkg": "./package.sh",
     "docker": "npm i . && npm run build && npm run start"
   },
   "bin": {

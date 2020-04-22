@@ -85,9 +85,17 @@ interface ObjectConstructor {
 
 
 interface Window {
-    ORIGINAL:string
+  ORIGINAL:string
 }
 
+declare module NodeJS {
+  interface Global {
+    logging:boolean
+  }
+  interface Process {
+    pkg:boolean
+  }
+}
 
 interface Navigator {
   getBattery?:() => Promise<any>

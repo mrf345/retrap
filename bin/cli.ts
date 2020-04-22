@@ -40,8 +40,9 @@ const cli = meow(`
 
     try {
         await isPortReachable(port, {host: ipAddress})
-        await setupAppAndIO(`http://${ipAddress}:${port}`, logging)
+        await setupAppAndIO(`http://${ipAddress}:${port}`)
         server.listen(port, ipAddress, () => console.log(parseWelcomeMessage(ipAddress, port, pkg.version, logging)))
+        global.logging = logging
     } catch (err) {
         console.warn(note('Error: ') + 'failed to connect through the chosen port number or IP address, probably busy.\n')
         console.log(err, '\n')

