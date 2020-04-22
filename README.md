@@ -1,6 +1,6 @@
 <b>
 <pre align='center'>
-┌───────────────────────────────────────────────────────┐
+┌─────────────────────────────────────────────────────────────────┐
 │                                                                 │
 │ 88888888ba         888888888888                                 │
 │ 88      "8b             88                                      │
@@ -12,14 +12,12 @@
 │ 88      `8b  `"Ybbd8"   88  88          `"8bbdP"Y8  88`YbbdP"   │
 │                                                     88          │
 │                                                     88          │
-└───────────────────────────────────────────────────────┘
+└─────────────────────────────────────────────────────────────────┘
+<h5>
+    Open-Source intelligence OSINT tracking and analysis tool. Inspired by Trape.
+</h5>
 </pre>
 </b>
-
-<h5 align='center'>
-Open-Source intelligence OSINT tracking and analysis tool. Inspired by Trape.
-</h5>
-<hr/>
 
 #### Development Setup:
 
