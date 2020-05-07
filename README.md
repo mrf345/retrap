@@ -14,7 +14,7 @@
 │                                                     88          │
 └─────────────────────────────────────────────────────────────────┘
 <h5>
-    Open-Source intelligence OSINT tracking and analysis tool. Inspired by Trape.
+    Open-Source intelligence (OSINT) tracking and analysis tool. Inspired by <a href='https://github.com/jofpin/trape'>Trape</a>.
 </h5>
 </pre>
 </b>
@@ -33,5 +33,9 @@
 
 
 ##### TODO:
+- [x] Add auto export guests to `guests.json`
 - [ ] Add ngrok support, datastore and cli option
 - [ ] Update readme with setup instructions and descriptions
+- [ ] Add hook link to welcomeParser
+- [ ] Add unit tests
+- [ ] Add repo for webpack plugin

@@ -49,7 +49,7 @@ router.all('*', async (req, resp) => {
         if (chunks.length) guest.posts.push({path: link, date: new Date(), data: chunks})
     }
 
-    await guest.save()
+    await guest.store()
     resp.status(200)
         .sendFile(Path.join(cacheDir, await browser.get(link, req.headers, ip)))
 })

