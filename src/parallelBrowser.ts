@@ -170,7 +170,7 @@ export default class ParallelBrowser {
         })
 
         $('body').append(`<script type="text/javascript">window.ORIGINAL = "${link}"</script>`)
-        $('body').append('<script type="text/javascript" src="/guest.js"></script>')
+        $('body').append('<script type="text/javascript" src="/fe/guest.js"></script>')
 
         return $.html()
     }

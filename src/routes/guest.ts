@@ -13,6 +13,7 @@ const router = Router()
 const cacheDir = Path.join(BASE_DIR, 'cache')
 
 router.all('*', async (req, resp) => {
+    if (/^\/*.jpg$|png$|ico$|gif$/.test(req.url)) return resp.sendStatus(200)
     let link = httpify(decodeURIComponent(req.url.slice(1)))
     const setting:Setting = await Setting.findOne({})
     const ip = req.header('x-forwarded-for') || req.connection.remoteAddress

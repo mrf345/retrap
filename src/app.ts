@@ -25,7 +25,7 @@ export const setupAppAndIO = async (address:string) => {
 
     app.use(cors({origin: true}))
     app.use(Express.urlencoded())
-    app.use(Express.static(Path.resolve(__dirname, '../frontend'), {index: false}))
+    app.use('/fe', Express.static(Path.resolve(__dirname, '../frontend'), {index: false}))
     app.use(Express.static(cacheDir, {index: false}))
     app.use((req, res, next) => {
         res.locals.browser = browser

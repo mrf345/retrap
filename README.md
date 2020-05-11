@@ -36,6 +36,6 @@
 - [x] Add auto export guests to `guests.json`
 - [ ] Add ngrok support, datastore and cli option
 - [ ] Update readme with setup instructions and descriptions
-- [ ] Add hook link to welcomeParser
+- [x] Add hook link to welcomeParser
 - [ ] Add unit tests
 - [ ] Add repo for webpack plugin
