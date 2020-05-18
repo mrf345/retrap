@@ -2,16 +2,17 @@ import * as chalk from 'chalk'
 import * as Box from 'cli-box'
 
 
-export const parseWelcomeMessage = (ip:string, port:number, version:string, logging:boolean|string) => {
-    let link = chalk.blue.underline(`http://${ip}:${port}`)
+export const parseWelcomeMessage = (ip:string, port:number, version:string, logging:boolean|string, tunnel:boolean|string) => {
+    let link = chalk.blue.underline(tunnel ? tunnel : `http://${ip}:${port}`)
     let lureLink = `${link}/example.com`
     let hookLink = `${link}/fe/guest.js`
     const marks = {nw: "", n: "", ne: "", e: "", se: "", s: "", sw: "", w: ""}
     const separator = chalk.blue('│                                                                 │\n')
     version = `${version}`
     logging = logging ? 'true ' : 'false'
+    tunnel = tunnel ? 'true ' : 'false'
 
-    if (52 > lureLink.length) lureLink = ' '.repeat(52 - lureLink.length) + lureLink
+    if (56 > lureLink.length) lureLink = ' '.repeat(56 - lureLink.length) + lureLink
     if (58 > lureLink.length) hookLink = ' '.repeat(58 - hookLink.length) + hookLink
     if (8 > version.length) version = ' '.repeat(8 - version.length) + version
     return Box({marks, fullscreen: true}, chalk.bold(
@@ -32,8 +33,10 @@ export const parseWelcomeMessage = (ip:string, port:number, version:string, logg
         ) + (
             `${chalk.blue('│')}            * You are running version: ${chalk.red.bold(version)}                  ${chalk.blue('│')}\n` +
             `${chalk.blue('│')}            * Server logging's enabled:   ${chalk.red.bold(logging)}                  ${chalk.blue('│')}\n` +
+            `${chalk.blue('│')}             * Ngrok tunnel's enabled:   ${chalk.red.bold(tunnel)}                   ${chalk.blue('│')}\n` +
             separator +
-            `${chalk.blue('│')}    ${chalk.red('[')} Lure's running on:  ${lureLink} ${chalk.red(']')}    ${chalk.blue('│')}\n` +
+            separator +
+            `${chalk.blue('│')}  ${chalk.red('[')} Lure's running on:  ${lureLink} ${chalk.red(']')}  ${chalk.blue('│')}\n` +
             `${chalk.blue('│')}    ${chalk.red('[')} Hook's link:  ${hookLink} ${chalk.red(']')}    ${chalk.blue('│')}\n`
         ) + chalk.blue(
             separator +

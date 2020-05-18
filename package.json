@@ -7,7 +7,7 @@
     "postinstall": "(cd frontend/guest/ && npm i .)",
     "lint": "tslint -c tslint.json '{src,bin}/**/*.ts' && (cd frontend/guest/ && npm run lint)",
     "build": "rm -rf build/* && tsc && (cd frontend/guest/ && npm run build)",
-    "start": "node build/bin/cli.js",
+    "start": "node build/bin/cli.js #-a 1ZiAxZb5Op3RkqF89no7imRqhim_4rWwGZvrv8Xd9AxeMxCpX",
     "pkg": "./package.sh",
     "docker": "npm i . && npm run build && npm run start"
   },
@@ -63,6 +63,7 @@
     "meow": "^6.1.0",
     "morgan": "^1.10.0",
     "nedb-models": "^3.0.1",
+    "ngrok": "^3.2.7",
     "node-fetch": "^2.6.0",
     "puppeteer": "^2.1.1",
     "socket.io": "^2.3.0",

@@ -33,9 +33,9 @@
 
 
 ##### TODO:
-- [x] Add auto export guests to `guests.json`
-- [ ] Add ngrok support, datastore and cli option
-- [ ] Update readme with setup instructions and descriptions
-- [x] Add hook link to welcomeParser
-- [ ] Add unit tests
-- [ ] Add repo for webpack plugin
+- [x] Add auto export guests to `guests.json` on root directory
+- [ ] Add REST API to send actions to Guests
+- [x] Add ngrok support, to `settings` datastore and a `cli` option
+- [ ] Add unit or integration tests
+- [ ] Add proper and fully detailed documentation
+- [ ] Add an admin user-interface for REST API

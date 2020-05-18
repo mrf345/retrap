@@ -85,6 +85,7 @@ export class Guest extends Model {
         const guest = Object.assign({}, (guests.find(g => g.ip === data.ip) || {}), data)
 
         try {
+            if (FS.existsSync(jsonPath)) await FS.promises.unlink(jsonPath)
             await FS.promises.writeFile(
                 jsonPath,
                 JSON.stringify(
@@ -111,13 +112,13 @@ export class Setting extends Model {
     defaultLink:string
     timeout:number
     retries:number
-    ngrokApiKey:string
+    ngrokAuthToken:string
 
-    async add(defaultLink = 'http://google.com', timeout = 30, retries = 2, ngrokApiKey = ''):Promise<Setting> {
+    async add(defaultLink = 'http://google.com', timeout = 30, retries = 2, ngrokAuthToken = ''):Promise<Setting> {
         this.defaultLink = defaultLink
         this.timeout = timeout
         this.retries = retries
-        this.ngrokApiKey = ngrokApiKey
+        this.ngrokAuthToken = ngrokAuthToken
 
         return await this.store()
     }
