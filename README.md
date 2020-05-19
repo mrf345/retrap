@@ -20,28 +20,37 @@
 </pre>
 </b>
 
+<br />
+<p align='center'>
+    <a href="https://standardjs.com">
+        <img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="Standard - JavaScript Style Guide">
+    </a>
+    <a href="https://standardjs.com">
+        <img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="Standard - JavaScript Style Guide">
+    </a>
+</p>
+<br />
 
-#### Setup
-##### With docker:
+#### Setup 🧰
+##### - With docker:
 - Make sure [docker](https://www.docker.com/products/docker-desktop) and [docker-compose](https://docs.docker.com/compose/install/) is installed on your system.
 - And run it with `docker-compose up` after the setup is complete, it should be running on http://0.0.0.0:8989
 
-##### With executable:
+##### - With executable:
 You can find an executable that supports your OS from the following links:
 
 - [Github](https://github.com/mrf345/retrap/releases)
 - [Sourceforge](https://sourceforge/retrap)
 
-##### From the source _(Tested only on Linux)_:
+##### - From the source _(Tested only on Linux)_:
 - Install dependencies `npm i .`
 - Build assets and compile TypeScript `npm run build`
 - Start the server `npm start`
 - Package it into binaries `npm run pkg`
 
 
-#### Main Features
-
-##### Ngrok tunneling support
+#### Features ✨
+##### - Ngrok tunneling support
 expose the local server to the internet with Ngrok secure tunnel
 
 <details>
@@ -49,7 +58,7 @@ expose the local server to the internet with Ngrok secure tunnel
 </details>
 
 
-##### Captures and records user's information
+##### - Captures and records user's information
 bla bla
 
 <details>
@@ -62,7 +71,7 @@ bla bla
 </details>
 
 
-##### Detects user's active sessions 
+##### - Detects user's active sessions 
 bla bla
 
 <details>
@@ -71,7 +80,7 @@ bla bla
 </details>
 
 
-##### Realtime hooks to control user's active session
+##### - Realtime hooks to control user's active session
 bla bla
 
 <details>
@@ -80,7 +89,7 @@ bla bla
 </details>
 
 
-##### Hooking script to integrate with your custom webpages
+##### - Hooking script to integrate with your custom webpages
 bla bla
 
 <details>
@@ -88,7 +97,7 @@ bla bla
 </details>
 
 
-##### RESTFul API to execute hooks, query users and integrate with other platforms
+##### - RESTFul API to execute hooks, query users and integrate with other platforms
 bla bla
 
 <details>
@@ -96,16 +105,17 @@ bla bla
 </details>
 
 
-#### Disclaimer and Background
-##### Why the hell ? 
+#### Disclaimer and Background ❎
+
+##### - Why the hell ? 
 bla bla
 
-##### How to protect yourself and the users of your web apps ?
+##### - How to protect yourself and the users of your web apps ?
 bla bla
 
 
 
-#### TODO:
+#### TODO ✅:
 - [x] Add auto export guests to `guests.json` on root directory
 - [x] Add REST API to send hook actions to Guests
 - [x] Add ngrok support, to `settings` datastore and a `cli` option
