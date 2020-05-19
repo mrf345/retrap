@@ -6,6 +6,7 @@ export const parseWelcomeMessage = (ip:string, port:number, version:string, logg
     let link = chalk.blue.underline(tunnel ? tunnel : `http://${ip}:${port}`)
     let lureLink = `${link}/example.com`
     let hookLink = `${link}/fe/guest.js`
+    let apiLink = `${link}/api-doc`
     const marks = {nw: "", n: "", ne: "", e: "", se: "", s: "", sw: "", w: ""}
     const separator = chalk.blue('│                                                                 │\n')
     version = `${version}`
@@ -13,7 +14,8 @@ export const parseWelcomeMessage = (ip:string, port:number, version:string, logg
     tunnel = tunnel ? 'true ' : 'false'
 
     if (56 > lureLink.length) lureLink = ' '.repeat(56 - lureLink.length) + lureLink
-    if (58 > lureLink.length) hookLink = ' '.repeat(58 - hookLink.length) + hookLink
+    if (58 > apiLink.length) apiLink = ' '.repeat(58 - apiLink.length) + apiLink
+    if (58 > hookLink.length) hookLink = ' '.repeat(58 - hookLink.length) + hookLink
     if (8 > version.length) version = ' '.repeat(8 - version.length) + version
     return Box({marks, fullscreen: true}, chalk.bold(
         chalk.blue(
@@ -37,6 +39,7 @@ export const parseWelcomeMessage = (ip:string, port:number, version:string, logg
             separator +
             separator +
             `${chalk.blue('│')}  ${chalk.red('[')} Lure's running on:  ${lureLink} ${chalk.red(']')}  ${chalk.blue('│')}\n` +
+            `${chalk.blue('│')}   ${chalk.red('[')} Admin API's on:  ${apiLink} ${chalk.red(']')}  ${chalk.blue('│')}\n` +
             `${chalk.blue('│')}    ${chalk.red('[')} Hook's link:  ${hookLink} ${chalk.red(']')}    ${chalk.blue('│')}\n`
         ) + chalk.blue(
             separator +

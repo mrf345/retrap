@@ -42,6 +42,7 @@ export class Guest extends Model {
     timezone:string
     isp:string
     networkSpeed:NetworkSpeedObj
+    online:boolean
 
     async add(
         ip:string, os = '', browser = '', country = '', countryCode = '', regionName = '', city = '',
@@ -66,6 +67,7 @@ export class Guest extends Model {
         this.logs = logs
         this.screenshots = screenshots
         this.keyLogs = keyLogs
+        this.online = true
 
         return await this.store()
     }

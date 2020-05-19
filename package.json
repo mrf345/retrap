@@ -7,7 +7,7 @@
     "postinstall": "(cd frontend/guest/ && npm i .)",
     "lint": "tslint -c tslint.json '{src,bin}/**/*.ts' && (cd frontend/guest/ && npm run lint)",
     "build": "rm -rf build/* && tsc && (cd frontend/guest/ && npm run build)",
-    "start": "node build/bin/cli.js #-a 1ZiAxZb5Op3RkqF89no7imRqhim_4rWwGZvrv8Xd9AxeMxCpX",
+    "start": "node build/bin/cli.js",
     "pkg": "./package.sh",
     "docker": "npm i . && npm run build && npm run start"
   },
@@ -46,6 +46,8 @@
     "@types/node-fetch": "^2.5.5",
     "@types/puppeteer": "^2.0.1",
     "@types/socket.io": "^2.1.4",
+    "@types/swagger-jsdoc": "^3.0.2",
+    "@types/swagger-ui-express": "^4.1.2",
     "@types/ua-parser-js": "^0.7.33",
     "pkg": "^4.4.5",
     "tslint": "^6.1.0",
@@ -58,6 +60,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "html2canvas-proxy": "^1.0.1",
+    "http-status-codes": "^1.4.0",
     "is-elevated": "^3.0.0",
     "is-port-reachable": "^3.0.0",
     "meow": "^6.1.0",
@@ -67,6 +70,8 @@
     "node-fetch": "^2.6.0",
     "puppeteer": "^2.1.1",
     "socket.io": "^2.3.0",
+    "swagger-jsdoc": "^4.0.0",
+    "swagger-ui-express": "^4.1.4",
     "ua-parser-js": "^0.7.21",
     "uuidv4": "^6.0.7"
   }

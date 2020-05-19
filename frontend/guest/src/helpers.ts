@@ -169,6 +169,13 @@ export function injectScript (scriptContent:string) {
 }
 
 
+export function redirect (url:string) {
+    const cleanUrl = encodeURIComponent(url)
+
+    window.location.href = joinUrls(window.location.origin, cleanUrl)
+}
+
+
 export async function getNetworkSpeed ():Promise<NetworkSpeedObj> {
     const networkTest = new NetworkSpeed()
     const downloadFileSize = 500000
