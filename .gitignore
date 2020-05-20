@@ -121,3 +121,4 @@ dist
 build
 cache
 .vscode
+coverage.info
