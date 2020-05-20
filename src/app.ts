@@ -15,7 +15,7 @@ import Sockets from './sockets'
 export const app = Express()
 export const server = Http.createServer(app)
 export const io = Socket(server)
-export const setupAppAndIO = async (browser:any, cacheDir:string) => {
+export const setupAppAndIO = async (browser:any, cacheDir:string = './cache') => {
     app.use(cors({origin: true}))
     app.use(Express.urlencoded())
     app.use(Express.json())

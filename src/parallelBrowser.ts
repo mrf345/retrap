@@ -4,7 +4,7 @@ import { uuid } from 'uuidv4'
 import * as puppeteer from 'puppeteer'
 import * as Cheerio from 'cheerio'
 
-import { resolveRelativeUrl, localizeExternalUrl, joinUrls, getUrlBase, isFileUrl, getUrlFileExtension } from './utils'
+import { resolveRelativeUrl, localizeExternalUrl, joinUrls, getUrlBase, isFileUrl, getUrlFileExtension, httpify } from './utils'
 import { note } from '../bin/styles'
 
 
@@ -14,52 +14,6 @@ interface Cache {
 
 interface Tries {
     [key:string]: number
-}
-
-interface Browsers {
-    [key:string]:Browser
-}
-
-
-class Browser {
-    path:string
-    limitMinutes:number
-    lastAccess:Date
-    private _browser:any
-    private sessionId:string
-
-    constructor(sessionId:string, limitMinutes = 10) {
-        this.limitMinutes = limitMinutes
-        this.sessionId = sessionId
-        this.lastAccess = new Date()
-        this.path = process.env.PUPPETEER_EXECUTABLE_PATH ||
-            (process.pkg
-              ? Path.join(
-                  Path.dirname(process.execPath),
-                  'puppeteer',
-                  ...puppeteer
-                    .executablePath()
-                    .split(Path.sep)
-                    .slice(6)
-                )
-              : puppeteer.executablePath())
-    }
-
-    get shouldCleanup () {
-        return (new Date().getMinutes() - this.limitMinutes) > this.lastAccess.getMinutes()
-    }
-
-    async get ():Promise<puppeteer.Browser> {
-        this.lastAccess = new Date()
-
-        return this._browser
-            ? this._browser
-            : this._browser = await puppeteer.launch({
-                defaultViewport: {width: 1920, height: 1080},
-                args: ['--no-sandbox'],
-                executablePath: this.path
-            })
-    }
 }
 
 
@@ -73,23 +27,11 @@ export default class ParallelBrowser {
     retries:number
     maxRetries:number
     cacheDir:string
-    browsers:Browsers
+    browser:any
+    exePath:string
     cleaner:NodeJS.Timeout
 
-    private browsersCleaner() {
-        this.cleaner = setInterval(() => {
-            Object
-                .entries(this.browsers)
-                .map(async ([sessionId, browser]) => {
-                    if (browser.shouldCleanup) {
-                        await (await browser.get()).close()
-                        delete this.browsers[sessionId]
-                    }
-                })
-        }, 5000)
-    }
-
-    constructor(serverUrl:string, cacheDir:string, defaultLink:string, retries = 2, timeout = 30) {
+    constructor(serverUrl:string = 'http://0.0.0.0', cacheDir:string = './cache', defaultLink:string = 'example.com', retries = 2, timeout = 30) {
         this.serverUrl = serverUrl
         this.cacheDir = cacheDir
         this.defaultLink = defaultLink
@@ -98,15 +40,30 @@ export default class ParallelBrowser {
         this.maxRetries = retries * 2
         this.tries = {}
         this.cache = {}
-        this.browsers = {}
-        this.browsersCleaner()
+        this.exePath = process.env.PUPPETEER_EXECUTABLE_PATH ||
+            (process.pkg
+              ? Path.join(
+                  Path.dirname(process.execPath),
+                  'puppeteer',
+                  ...puppeteer
+                    .executablePath()
+                    .split(Path.sep)
+                    .slice(6)
+                )
+              : puppeteer.executablePath())
+
+        if (!FS.existsSync(this.cacheDir)) FS.mkdirSync(this.cacheDir)
     }
 
     private async fetchAndCache(link:string, reqHeaders:any, sessionId:string) {
         const cacheName = `/${uuid().split('-').join('')}.html`
         const cachePath = Path.join(this.cacheDir, cacheName)
-        const browser = await (this.browsers[sessionId] || new Browser(sessionId)).get()
-        const page = await browser.newPage()
+        this.browser = await puppeteer.launch({
+            defaultViewport: {width: 1920, height: 1080},
+            args: ['--no-sandbox'],
+            executablePath: this.exePath
+        })
+        const page = await this.browser.newPage()
         await page.setRequestInterception(true)
         page.on('request', (req) => {
             const headers = req.headers()
@@ -116,9 +73,9 @@ export default class ParallelBrowser {
 
             req.continue({ headers })
         })
-        await page.goto(link, {timeout: this.timeout * 1000, waitUntil: 'networkidle2'})
+        await page.goto(httpify(link), {timeout: this.timeout * 1000, waitUntil: 'networkidle2'})
         const content = await page.content()
-        await browser.close()
+        await this.browser.close()
 
         return { content, cachePath, cacheName }
     }
@@ -186,6 +143,7 @@ export default class ParallelBrowser {
         try {
             const { content, cacheName, cachePath } = await this.fetchAndCache(link, headers, sessionId)
 
+            if (FS.existsSync(cachePath))
             await FS.promises.writeFile(cachePath, this.parseHTMLContent(link, content))
             return this.cache[link] = cacheName
         } catch (err) {
@@ -195,6 +153,7 @@ export default class ParallelBrowser {
             const counter = this.tries[link] || 1
             this.tries[link] = counter + 1
 
+            if (this.browser) await this.browser.close()
             if (this.tries[link] > this.maxRetries) throw err
             else {
                 const destination = this.tries[link] >= this.retries

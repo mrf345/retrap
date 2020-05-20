@@ -3,7 +3,7 @@ import * as Box from 'cli-box'
 
 
 export const parseWelcomeMessage = (ip:string, port:number, version:string, logging:boolean|string, tunnel:boolean|string) => {
-    let link = chalk.blue.underline(tunnel ? tunnel : `http://${ip}:${port}`)
+    const link = chalk.blue.underline(tunnel ? tunnel : `http://${ip}:${port}`)
     let lureLink = `${link}/example.com`
     let hookLink = `${link}/fe/guest.js`
     let apiLink = `${link}/api-doc`

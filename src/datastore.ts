@@ -76,7 +76,7 @@ export class Guest extends Model {
         const data:Guest = await super.save()
         const jsonPath = Path.join(BASE_DIR, 'guests.json')
         let guests:Guest[] = []
-        
+
         try {
             if (FS.existsSync(jsonPath)) guests = JSON.parse(await FS.promises.readFile(jsonPath, 'utf-8'))
         } catch(err) {

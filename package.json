@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "description": "Open-Source intelligence OSINT tracking and analysis tool.",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "(cd frontend/guest/ && npm i .)",
+    "test": "npm run build > /dev/null && jest --verbose --force-exit --coverage --silent",
+    "postinstall": "cd frontend/guest/ && npm i .",
     "lint": "tslint -c tslint.json '{src,bin}/**/*.ts' && (cd frontend/guest/ && npm run lint)",
     "build": "rm -rf build/* && tsc && (cd frontend/guest/ && npm run build)",
     "start": "node build/bin/cli.js",
@@ -49,7 +49,9 @@
     "@types/swagger-jsdoc": "^3.0.2",
     "@types/swagger-ui-express": "^4.1.2",
     "@types/ua-parser-js": "^0.7.33",
+    "jest": "^26.0.1",
     "pkg": "^4.4.5",
+    "supertest": "^4.0.2",
     "tslint": "^6.1.0",
     "typescript": "^3.8.3"
   },

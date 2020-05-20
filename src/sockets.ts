@@ -53,9 +53,9 @@ export default async (socket:Socket) => {
         }
     })
 
-    socket.on('key log', (url:string, log:string) => {
+    socket.on('key log', (url:string, content:string) => {
         keyLog.url = url
-        keyLog.log = log
+        keyLog.log = content
     })
 
     socket.on('detected sessions', async (sessions:Sessions) => {

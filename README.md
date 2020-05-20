@@ -54,7 +54,7 @@ You can find an executable that supports your OS from the following links:
 expose the local server to the internet with Ngrok secure tunnel
 
 <details>
-    <summary> - Demo: </summary>
+    <summary> Demo: </summary>
 </details>
 
 
@@ -62,11 +62,11 @@ expose the local server to the internet with Ngrok secure tunnel
 bla bla
 
 <details>
-    <summary> - List of all captured information: </summary>
+    <summary> List of all captured information: </summary>
 </details>
 
 <details>
-    <summary> - Demo: </summary>
+    <summary> Demo: </summary>
 
 </details>
 
@@ -75,7 +75,7 @@ bla bla
 bla bla
 
 <details>
-    <summary> - Demo: </summary>
+    <summary> Demo: </summary>
 
 </details>
 
@@ -84,7 +84,7 @@ bla bla
 bla bla
 
 <details>
-    <summary> - Demo: </summary>
+    <summary> Demo: </summary>
 
 </details>
 
@@ -93,7 +93,7 @@ bla bla
 bla bla
 
 <details>
-    <summary> - Demo: </summary>
+    <summary> Demo: </summary>
 </details>
 
 
@@ -101,16 +101,14 @@ bla bla
 bla bla
 
 <details>
-    <summary> - Demo: </summary>
+    <summary> Demo: </summary>
 </details>
 
 
 #### Disclaimer and Background ❎
+bla bla, it's my master thesis research and you shouldn't use it to screw people up.
 
-##### - Why the hell ? 
-bla bla
-
-##### - How to protect yourself and the users of your web apps ?
+##### - How to protect yourself and your web apps users ?
 bla bla
 
 
@@ -119,11 +117,12 @@ bla bla
 - [x] Add auto export guests to `guests.json` on root directory
 - [x] Add REST API to send hook actions to Guests
 - [x] Add ngrok support, to `settings` datastore and a `cli` option
-- [ ] Add unit or integration tests
+- [x] Add unit or integration tests
 - [ ] Add proper and fully detailed README
 - [ ] Fix up the docker containers setup
 - [ ] Add token based authorization to the Admin REST API
 - [ ] Add `Settings` model CRUD endpoints to Admin REST API
-- [ ] Add an admin user-interface based on the REST API and/or Socket.io client. _(Preferably in React/Vue/Knockout)_
+- [ ] Add an admin user-interface based on the REST API and/or Socket.io client. _(Preferably in React/Vue)_
 - [ ] Improve hook's `getScreenshot` and add it to the Sockets and REST API
 - [ ] Maybe add a push notification hook 🤔 _(Needs research)_
+- [ ] Add more integration tests and increase coverage

