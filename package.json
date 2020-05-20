@@ -4,7 +4,7 @@
   "description": "Open-Source intelligence OSINT tracking and analysis tool.",
   "scripts": {
     "test": "npm run build > /dev/null && jest --verbose --force-exit --coverage --silent",
-    "coverage": "npm test --coverageReporters=text-lcov > coverage.info",
+    "coverage": "npm run build > /dev/null && jest --verbose --force-exit --coverage --silent --coverageReporters=text-lcov > coverage.info",
     "postinstall": "cd frontend/guest/ && npm i .",
     "lint": "tslint -c tslint.json '{src,bin}/**/*.ts' && (cd frontend/guest/ && npm run lint)",
     "build": "rm -rf build/* && tsc && (cd frontend/guest/ && npm run build)",

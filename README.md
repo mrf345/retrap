@@ -22,11 +22,14 @@
 
 <br />
 <p align='center'>
-    <a href="https://standardjs.com">
-        <img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="Standard - JavaScript Style Guide">
+    <a href='https://github.com/mrf345/retrap/actions' target='_blank' style='margin-right: 2%'>
+        <img alt='Actions Status' src='https://github.com/mrf345/retrap/workflows/CI/badge.svg' />
     </a>
-    <a href="https://standardjs.com">
-        <img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="Standard - JavaScript Style Guide">
+    <a href='https://coveralls.io/github/mrf345/retrap?branch=master'>
+        <img src='https://coveralls.io/repos/github/mrf345/retrap/badge.svg?branch=master' alt='Coverage Status' />
+    </a>
+    <a href='https://github.com/mrf345/retrap/releases'>
+        <img src='https://img.shields.io/github/v/release/mrf345/retrap.svg' alt='release'>
     </a>
 </p>
 <br />
@@ -106,7 +109,7 @@ bla bla
 
 
 #### Disclaimer and Background ❎
-bla bla, it's my master thesis research and you shouldn't use it to screw people up.
+bla bla
 
 ##### - How to protect yourself and your web apps users ?
 bla bla
@@ -114,11 +117,6 @@ bla bla
 
 
 #### TODO ✅:
-- [x] Add auto export guests to `guests.json` on root directory
-- [x] Add REST API to send hook actions to Guests
-- [x] Add ngrok support, to `settings` datastore and a `cli` option
-- [x] Add unit or integration tests
-- [ ] Add proper and fully detailed README
 - [ ] Fix up the docker containers setup
 - [ ] Add token based authorization to the Admin REST API
 - [ ] Add `Settings` model CRUD endpoints to Admin REST API
