@@ -10,6 +10,7 @@ import * as swaggerUi from 'swagger-ui-express'
 import GuestRoutes from './routes/guest'
 import APIRoutes from './routes/api'
 import Sockets from './sockets'
+import { storeAndLookUpGuests } from './middleware'
 
 
 export const app = Express()
@@ -19,6 +20,7 @@ export const setupAppAndIO = async (browser:any, cacheDir:string = './cache') =>
     app.use(cors({origin: true}))
     app.use(Express.urlencoded())
     app.use(Express.json())
+    app.use(storeAndLookUpGuests)
     app.use('/fe', Express.static(Path.resolve(__dirname, '../frontend'), {index: false}))
     app.use(Express.static(cacheDir, {index: false}))
     app.use((req, res, next) => {

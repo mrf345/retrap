@@ -86,6 +86,7 @@ interface ObjectConstructor {
 
 interface Window {
   ORIGINAL:string
+  SERVER:string
 }
 
 declare module NodeJS {
