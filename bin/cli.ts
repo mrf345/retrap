@@ -24,7 +24,7 @@ const cli = meow(`
         ${param('--ip-address, -i')} IP address to stream server on        ${note('(0.0.0.0)')}
         ${param('--port, -p')} Port to stream server through               ${note('(8989)')}
         ${param('--logging, -o')} Display http requests logs               ${note('(true)')}
-        ${param('--ngrok-auth-token', '-a')} Ngrok account authentication token
+        ${param('--ngrok-token', '-a')} Ngrok account authentication token
 
     ${bold('Example')}
 
@@ -33,7 +33,7 @@ const cli = meow(`
         ipAddress: {type: 'string', alias: 'i', default: '0.0.0.0'},
         port: {type: 'number', alias: 'p', default: 8989},
         logging: {type: 'boolean', alias: 'o', default: true},
-        authtoken: {type: 'string', alias: 'a', default: ''}
+        ngrokToken: {type: 'string', alias: 'a', default: ''}
     }
 })
 const beforeExit = async () => {
@@ -45,7 +45,7 @@ const beforeExit = async () => {
 process.on('exit', beforeExit)
 process.on('SIGINT', beforeExit)
 ;(async () => {
-    const { ipAddress, port, logging, authtoken } = cli.flags
+    const { ipAddress, port, logging, ngrokToken } = cli.flags
     const admin = await isElevated()
 
     if (1024 > port && !admin) return console.warn(
@@ -61,7 +61,7 @@ process.on('SIGINT', beforeExit)
         await isPortReachable(port, {host: ipAddress})
         await setupAppAndIO(browser, cacheDir)
         server.listen(port, ipAddress, async () => {
-            const storedOrPassedToken = authtoken || ngrokAuthToken
+            const storedOrPassedToken = ngrokToken || ngrokAuthToken
             let tunnelAddress = ''
 
             if (storedOrPassedToken) await ngrok.authtoken(storedOrPassedToken)
