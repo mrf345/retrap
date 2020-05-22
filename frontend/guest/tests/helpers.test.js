@@ -6,6 +6,10 @@ const mockers = require('./mockers')
 
 
 describe('Unit testing hooks helper and action functions 🎣', () => {
+    beforeEach(() =>
+        Array.from(document.body.children)
+            .forEach(c => document.body.removeChild(c)))
+
     test('Test resolveFavIconEdgeCases effect', () => {
         const secondSource = document.createElement('meta')
         secondSource.content = 'https://testing.com/favicon.ico'
@@ -125,5 +129,69 @@ describe('Unit testing hooks helper and action functions 🎣', () => {
                 down: expectedMeasures,
                 up: expectedMeasures
             })
+    })
+
+    test('Test getScriptOrigin result', () => {
+        const mockScript = document.createElement('script')
+        const srcOrigin = 'https://testing.com'
+        const src = `${srcOrigin}/testing.js`
+        const id = 'testing'
+        mockScript.src = `${src}#${id}`
+        document.body.appendChild(mockScript)
+
+        expect(helpers.getScriptOrigin(id)).toEqual(srcOrigin)
+    })
+
+    test('Test getAuthForms result', () => {
+        const forms = 10
+
+        Array(forms).fill(undefined).forEach((_, i) => {
+            const form = document.createElement('form')
+            const user = document.createElement('input')
+            const pass = document.createElement('input')
+
+            form.method = 'POST'
+            user.name = 'username'
+            pass.name = 'password'
+            pass.type = 'password'
+
+            form.appendChild(user)
+            form.appendChild(pass)
+            document.body.appendChild(form)
+        })
+
+        expect(helpers.getAuthForms().length).toEqual(forms)
+    })
+
+    test('Test redirectAuthForms effect', () => {
+        const forms = 5
+
+        expect.assertions(forms + 1)
+        Array(forms).fill(undefined).forEach((_, i) => {
+            const form = document.createElement('form')
+            const user = document.createElement('input')
+            const pass = document.createElement('input')
+
+            form.method = 'POST'
+            user.name = 'username'
+            pass.name = 'password'
+            pass.type = 'password'
+
+            form.appendChild(user)
+            form.appendChild(pass)
+            document.body.appendChild(form)
+        })
+
+        const to = '/somewhere'
+        const hook = true
+        const hookStr = 'true'
+
+        helpers.redirectAuthForms(to, hook)
+
+        expect(helpers.getAuthForms().length).toEqual(forms)
+        helpers.getAuthForms()
+            .forEach(f =>
+                expect(f.action)
+                    .toEqual(`${origin}${to}?redirect=${window.location.href}&hook=${hookStr};`))
     })
 })

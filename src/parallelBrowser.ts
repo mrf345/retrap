@@ -83,19 +83,6 @@ export default class ParallelBrowser {
     private parseHTMLContent(link:string, content:string) {
         const $ = Cheerio.load(content)
 
-        $('form').each((i, e) => {
-            const action = $(e).attr('action')
-            const linkBase = getUrlBase(link)
-
-            if (action) {
-                const resolvedAction = action.includes(getUrlBase(link, false))
-                    ? joinUrls(this.serverUrl, action)
-                    : joinUrls(this.serverUrl, joinUrls(linkBase, action))
-
-                if (action) $(e).attr('action', resolvedAction)
-            }
-        })
-
         $('a').each((i, e) => {
             const href = $(e).attr('href')
 
@@ -126,7 +113,7 @@ export default class ParallelBrowser {
             })
         })
 
-        $('body').append(`<script type="text/javascript">window.ORIGINAL = "${link}"</script>`)
+        $('body').append(`<script type="text/javascript">window.ORIGINAL = "${link}; window.SERVER = ${this.serverUrl}"</script>`)
         $('body').append('<script type="text/javascript" src="/fe/guest.js"></script>')
 
         return $.html()
@@ -143,12 +130,11 @@ export default class ParallelBrowser {
         try {
             const { content, cacheName, cachePath } = await this.fetchAndCache(link, headers, sessionId)
 
-            if (FS.existsSync(cachePath))
             await FS.promises.writeFile(cachePath, this.parseHTMLContent(link, content))
             return this.cache[link] = cacheName
         } catch (err) {
-            console.warn('\n' + note('Warning: ') + `Failed to fetch and write cache for ${link}\n`)
-            console.log(err, '\n')
+            // console.warn('\n' + note('Warning: ') + `Failed to fetch and write cache for ${link}\n`)
+            // console.log(err, '\n')
 
             const counter = this.tries[link] || 1
             this.tries[link] = counter + 1
