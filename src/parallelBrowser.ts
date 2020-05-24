@@ -28,11 +28,12 @@ export default class ParallelBrowser {
     maxRetries:number
     cacheDir:string
     browser:any
+    page:any
     exePath:string
     cleaner:NodeJS.Timeout
 
-    constructor(serverUrl:string = 'http://0.0.0.0', cacheDir:string = './cache', defaultLink:string = 'example.com', retries = 2, timeout = 30) {
-        this.serverUrl = serverUrl
+    constructor(serverUrl:string = '', cacheDir:string = './cache', defaultLink:string = 'example.com', retries = 2, timeout = 30) {
+        this.serverUrl = serverUrl ? serverUrl : process.env.DOCKER ? 'http://0.0.0.0' : 'http://127.0.0.1'
         this.cacheDir = cacheDir
         this.defaultLink = defaultLink
         this.timeout = timeout
@@ -58,24 +59,27 @@ export default class ParallelBrowser {
     private async fetchAndCache(link:string, reqHeaders:any, sessionId:string) {
         const cacheName = `/${uuid().split('-').join('')}.html`
         const cachePath = Path.join(this.cacheDir, cacheName)
-        this.browser = await puppeteer.launch({
+        if (!this.browser) this.browser = await puppeteer.launch({
             defaultViewport: {width: 1920, height: 1080},
             args: ['--no-sandbox'],
             executablePath: this.exePath
         })
-        const page = await this.browser.newPage()
-        await page.setRequestInterception(true)
-        page.on('request', (req) => {
-            const headers = req.headers()
 
-            headers['User-Agent'] = reqHeaders['user-agent']
-            headers['Accept-Language'] = reqHeaders['accept-language']
+        if (!this.page) {
+            this.page = await this.browser.newPage()
+            await this.page.setRequestInterception(true)
+            this.page.on('request', (req) => {
+                const headers = req.headers()
 
-            req.continue({ headers })
-        })
-        await page.goto(httpify(link), {timeout: this.timeout * 1000, waitUntil: 'networkidle2'})
-        const content = await page.content()
-        await this.browser.close()
+                headers['User-Agent'] = reqHeaders['user-agent']
+                headers['Accept-Language'] = reqHeaders['accept-language']
+
+                req.continue({ headers })
+            })
+        }
+
+        await this.page.goto(httpify(link), {timeout: this.timeout * 1000, waitUntil: 'networkidle2'})
+        const content = await this.page.content()
 
         return { content, cachePath, cacheName }
     }
@@ -151,8 +155,8 @@ export default class ParallelBrowser {
             await FS.promises.writeFile(cachePath, this.parseHTMLContent(link, content))
             return this.cache[link] = cacheName
         } catch (err) {
-            // console.warn('\n' + note('Warning: ') + `Failed to fetch and write cache for ${link}\n`)
-            // console.log(err, '\n')
+            console.warn('\n' + note('Warning: ') + `Failed to fetch and write cache for ${link}\n`)
+            console.log(err, '\n')
 
             const counter = this.tries[link] || 1
             this.tries[link] = counter + 1

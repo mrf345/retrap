@@ -1,4 +1,4 @@
-cd frontend/guest/ && npm i .
+cd frontend/guest/ && npm i . && cd ../../
 
 # Copy over relative paths for Window Git environment
 os=`uname`

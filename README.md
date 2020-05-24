@@ -41,18 +41,24 @@
 
 ##### - With executable:
 You can find an executable that supports your OS from the following links:
-> make sure to unzip the file, and run the executable from the `terminal` or `cmd.exe`
-> NOTE: on Windows you'll have to start the `cmd.exe` as an Administrator.
 
 - [Github](https://github.com/mrf345/retrap/releases)
 - [Sourceforge](https://sourceforge.net/projects/retrap/)
+
+> make sure to unzip the file, and run the executable from the `terminal` or `cmd.exe` <br />
+> - on **Windows** you'll have to start the `cmd.exe` as an Administrator.
+> - on **MacOS** you'll have to go to `System preferences > Security > And allow the ngrok-macos executable`
 
 
 ##### - From the source _(Tested on Linux and [Window Git Bash](https://gitforwindows.org/))_:
 - Install dependencies `npm i .`
 - Build assets and compile TypeScript `npm run build`
 - Start the server `npm start`
-- Package it into binaries `npm run pkg`
+- Package it into binaries `nvm use && ./package.sh`
+
+##### - For developers:
+- To run linting and style check `npm run lint`
+- To run tests `npm run test`
 
 
 ### Options 📖
@@ -91,8 +97,8 @@ The authentication token can be persistent and saved as a default in `./collecti
 ##### - Captures user's information and active sessions
 IP address, location, languages, battery left, internet speed... As well as detecting and storing the active login sessions for facebook, gmail, instagram... The captured user's data are stored locally and can be accessed via:
 
-- `http://0.0.0.0:8989/api/guests/` an API endpoint that returns information of all the captured users.
-- `http://0.0.0.0:8989/api-docs` has a full documentation of the returned user's details and active sessions.
+- `http://127.0.0.1:8989/api/guests/` an API endpoint that returns information of all the captured users.
+- `http://127.0.0.1:8989/api-doc` has a full documentation of the returned user's details and active sessions.
 
 <details>
     <summary> Demo: </summary>
