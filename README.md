@@ -47,7 +47,7 @@ You can find an executable that supports your OS from the following links:
 
 > make sure to unzip the file, and run the executable from the `terminal` or `cmd.exe` <br />
 > - on **Windows** you'll have to start the `cmd.exe` as an Administrator.
-> - on **MacOS** you'll have to go to `System preferences > Security > And allow the ngrok-macos executable`
+> - on **MacOS** you'll have to go to `System preferences > Security > And allow the retrap-macos executable`
 
 
 ##### - From the source _(Tested on Linux and [Window Git Bash](https://gitforwindows.org/))_:
