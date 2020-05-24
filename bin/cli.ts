@@ -21,7 +21,7 @@ const cli = meow(`
 
     ${bold('Options')}
 
-        ${param('--ip-address, -i')} IP address to stream server on        ${note('(0.0.0.0)')}
+        ${param('--ip-address, -i')} IP address to stream server on        ${note('(127.0.0.1)')}
         ${param('--port, -p')} Port to stream server through               ${note('(8989)')}
         ${param('--logging, -o')} Display http requests logs               ${note('(true)')}
         ${param('--ngrok-token', '-a')} Ngrok account authentication token
@@ -30,20 +30,13 @@ const cli = meow(`
 
         ${command('$')} ${pkg.name} ${command('--port')} 8080 ${command('-l')}
 `, {flags: {
-        ipAddress: {type: 'string', alias: 'i', default: '0.0.0.0'},
+        ipAddress: {type: 'string', alias: 'i', default: '127.0.0.1'},
         port: {type: 'number', alias: 'p', default: 8989},
         logging: {type: 'boolean', alias: 'o', default: true},
         ngrokToken: {type: 'string', alias: 'a', default: ''}
     }
 })
-const beforeExit = async () => {
-    await ngrok.kill()
-    process.exit()
-}
 
-
-process.on('exit', beforeExit)
-process.on('SIGINT', beforeExit)
 ;(async () => {
     const { ipAddress, port, logging, ngrokToken } = cli.flags
     const admin = await isElevated()
@@ -57,7 +50,14 @@ process.on('SIGINT', beforeExit)
         const cacheDir = Path.join(BASE_DIR, 'cache')
         if (!FS.existsSync(cacheDir)) FS.mkdirSync(cacheDir, {recursive: true})
         const browser = new ParallelBrowser(`http://${ipAddress}:${port}`, cacheDir, defaultLink, retries, timeout)
+        const beforeExit = async () => {
+            await ngrok.kill()
+            if (browser.browser) await browser.browser.close()
+            process.exit()
+        }
 
+        process.on('exit', beforeExit)
+        process.on('SIGINT', beforeExit)
         await isPortReachable(port, {host: ipAddress})
         await setupAppAndIO(browser, cacheDir)
         server.listen(port, ipAddress, async () => {
@@ -67,10 +67,9 @@ process.on('SIGINT', beforeExit)
             const ngrokOptions = {
                 addr: port,
                 authtoken: storedOrPassedToken,
-                binPath: (d:string) => process.pkg ? Path.join(Path.dirname(process.execPath), ngrokFilename) : d
+                binPath: (d:string) => process.pkg ? Path.dirname(process.execPath) : d
             }
 
-            if (storedOrPassedToken) await ngrok.authtoken(storedOrPassedToken)
             if (storedOrPassedToken) {
                 try { tunnelAddress = await ngrok.connect(ngrokOptions) }
                 catch (err) { tunnelAddress = await ngrok.connect(ngrokOptions) }
@@ -79,10 +78,8 @@ process.on('SIGINT', beforeExit)
                 browser.serverUrl = tunnelAddress
             }
 
-            if (process.env.DOCKER) console.log(`Running on: http://${ipAddress}:${port}`)
-            else console.log(parseWelcomeMessage(
-                ipAddress.startsWith('0.0') ? '127.0.0.1' : ipAddress,
-                port, pkg.version, logging, tunnelAddress))
+            if (process.env.DOCKER) console.log(`Running on: http://0.0.0.0:${port}`)
+            else console.log(parseWelcomeMessage(ipAddress, port, pkg.version, logging, tunnelAddress))
 
             global.logging = logging
         })

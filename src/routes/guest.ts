@@ -2,7 +2,7 @@ import { Router } from 'express'
 import * as Path from 'path'
 
 import { Guest, Setting } from '../datastore'
-import { httpify } from '../utils'
+import { httpify, isValidUrl } from '../utils'
 import { BASE_DIR } from '../constants'
 import log from '../../bin/logger'
 
@@ -11,10 +11,10 @@ const router = Router()
 const cacheDir = Path.join(BASE_DIR, 'cache')
 
 router.all('*', async (req, resp) => {
-    if (/^\/*.jpg$|png$|ico$|gif$/.test(req.url)) return resp.sendStatus(200)
+    if (/^\/*.jpg$|png$|ico$|gif$/.test(req.url) || !req.url.trim()) return resp.sendStatus(200)
     const { redirect, hook } = req.query
     const post = req.method.toLowerCase() === 'post'
-    const link = httpify(decodeURIComponent(req.url.slice(1)))
+    let link = httpify(decodeURIComponent(req.url.slice(1)))
     const setting:Setting = await Setting.findOne({})
     const ip = req.header('x-forwarded-for') || req.connection.remoteAddress
     const { browser } = resp.locals
@@ -35,8 +35,11 @@ router.all('*', async (req, resp) => {
     }
 
     if (post && redirect) resp.redirect(hook === 'true' ? redirect : `/${redirect}`)
-    else resp.status(200)
-        .sendFile(Path.join(cacheDir, await browser.get(link, req.headers, ip)))
+    else {
+        if (!isValidUrl(link)) link = setting.defaultLink
+        return resp.status(200)
+            .sendFile(Path.join(cacheDir, await browser.get(link, req.headers, ip)))
+    }
 })
 
 
