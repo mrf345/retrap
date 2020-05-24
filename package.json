@@ -17,7 +17,8 @@
   },
   "pkg": {
     "assets": [
-      "build/frontend/**/*"
+      "build/frontend/**/*",
+      "build/src/routes/api.js"
     ]
   },
   "repository": {

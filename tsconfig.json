@@ -4,7 +4,7 @@
         "target": "es2015",
         "lib": ["ES2015", "DOM"],
         "moduleResolution": "node",
-        "removeComments": true,
+        "removeComments": false,
         "outDir": "build/",
         "sourceMap": true,
         "declaration": false,

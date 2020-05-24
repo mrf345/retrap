@@ -83,6 +83,19 @@ export default class ParallelBrowser {
     private parseHTMLContent(link:string, content:string) {
         const $ = Cheerio.load(content)
 
+        $('form').each((i, e) => {
+            const action = $(e).attr('action')
+            const linkBase = getUrlBase(link)
+
+            if (action) {
+                const resolvedAction = action.includes(getUrlBase(link, false))
+                    ? joinUrls(this.serverUrl, action)
+                    : joinUrls(this.serverUrl, joinUrls(linkBase, action))
+
+                if (action) $(e).attr('action', resolvedAction)
+            }
+        })
+
         $('a').each((i, e) => {
             const href = $(e).attr('href')
 
@@ -113,7 +126,12 @@ export default class ParallelBrowser {
             })
         })
 
-        $('body').append(`<script type="text/javascript">window.ORIGINAL = "${link}; window.SERVER = ${this.serverUrl}"</script>`)
+        $('body').append(`
+            <script type="text/javascript">
+                window.ORIGINAL = "${link}";
+                window.SERVER = "${this.serverUrl}";
+            </script>
+        `)
         $('body').append('<script type="text/javascript" src="/fe/guest.js"></script>')
 
         return $.html()

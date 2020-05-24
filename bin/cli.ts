@@ -61,19 +61,27 @@ process.on('SIGINT', beforeExit)
         await isPortReachable(port, {host: ipAddress})
         await setupAppAndIO(browser, cacheDir)
         server.listen(port, ipAddress, async () => {
-            const storedOrPassedToken = ngrokToken || ngrokAuthToken
             let tunnelAddress = ''
+            const storedOrPassedToken:string = ngrokToken || ngrokAuthToken
+            const ngrokFilename = process.platform.startsWith('win') ? 'ngrok.exe' : 'ngrok'
+            const ngrokOptions = {
+                addr: port,
+                authtoken: storedOrPassedToken,
+                binPath: (d:string) => process.pkg ? Path.join(Path.dirname(process.execPath), ngrokFilename) : d
+            }
 
             if (storedOrPassedToken) await ngrok.authtoken(storedOrPassedToken)
             if (storedOrPassedToken) {
-                try { tunnelAddress = await ngrok.connect({addr: port, authtoken: storedOrPassedToken}) }
-                catch (err) { tunnelAddress = await ngrok.connect({addr: port, authtoken: storedOrPassedToken}) }
+                try { tunnelAddress = await ngrok.connect(ngrokOptions) }
+                catch (err) { tunnelAddress = await ngrok.connect(ngrokOptions) }
 
                 tunnelAddress = tunnelAddress.replace('https', 'http')
                 browser.serverUrl = tunnelAddress
             }
 
-            console.log(parseWelcomeMessage(ipAddress, port, pkg.version, logging, tunnelAddress))
+            if (process.env.DOCKER) console.log(`Running on: http://${ipAddress}:${port}`)
+            else console.log(parseWelcomeMessage(ipAddress, port, pkg.version, logging, tunnelAddress))
+
             global.logging = logging
         })
     } catch (err) {

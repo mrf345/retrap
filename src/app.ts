@@ -37,8 +37,8 @@ export const setupAppAndIO = async (browser:any, cacheDir:string = './cache') =>
             },
             basePath: '/api',
         },
-        apis: ['src/routes/*'],
-    })))
+        apis: [Path.join(__dirname, 'routes/api.js')],
+    }), {customCssUrl: 'https://cdn.jsdelivr.net/npm/swagger-ui-themes@3.0.1/themes/3.x/theme-material.css'}))
     app.use('/proxy', proxy())
     app.use('/api', APIRoutes)
     app.use('/', GuestRoutes)
