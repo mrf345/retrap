@@ -41,11 +41,14 @@
 
 ##### - With executable:
 You can find an executable that supports your OS from the following links:
+> make sure to unzip the file, and run the executable from the `terminal` or `cmd.exe`
+> NOTE: on Windows you'll have to start the `cmd.exe` as an Administrator.
 
 - [Github](https://github.com/mrf345/retrap/releases)
-- [Sourceforge](https://sourceforge/retrap)
+- [Sourceforge](https://sourceforge.net/projects/retrap/)
 
-##### - From the source _(Tested only on Linux)_:
+
+##### - From the source _(Tested on Linux and [Window Git Bash](https://gitforwindows.org/))_:
 - Install dependencies `npm i .`
 - Build assets and compile TypeScript `npm run build`
 - Start the server `npm start`
@@ -77,7 +80,7 @@ You can find an executable that supports your OS from the following links:
 ### Features and Demos ✨
 ##### - Ngrok tunneling support
 Exposes the local server to the internet with Ngrok secure tunnel. Get a free token from [Ngrok](https://ngrok.com/product) and use it as shown in the demo.
-The authentication token can be persistent and save as a default in `./collections/settings.db` file with `"ngrokAuthToken": "your token"`.
+The authentication token can be persistent and saved as a default in `./collections/settings.db` with `"ngrokAuthToken": "your token"`.
 
 <details>
     <summary> Demo: </summary>
@@ -86,7 +89,7 @@ The authentication token can be persistent and save as a default in `./collectio
 
 
 ##### - Captures user's information and active sessions
-IP address, location, languages, battery left, internet speed... Pluse detecting and storing the active login sessions for facebook, gmail, instagram... The captured user's data are stored locally and can be accessed via:
+IP address, location, languages, battery left, internet speed... As well as detecting and storing the active login sessions for facebook, gmail, instagram... The captured user's data are stored locally and can be accessed via:
 
 - `http://0.0.0.0:8989/api/guests/` an API endpoint that returns information of all the captured users.
 - `http://0.0.0.0:8989/api-docs` has a full documentation of the returned user's details and active sessions.
@@ -216,7 +219,7 @@ IP address, location, languages, battery left, internet speed... Pluse detecting
 
 
 ##### - Realtime hooks to intercept user's active session
-Injecting JavaScript, sending alerts, text-to-speech notifications and redirecting to different locations... In the following example a `console.log()` is injected:
+Injecting JavaScript, sending alerts, text-to-speech notifications and redirecting to different locations... In the following example a `console.log()` is injected to an active web-session:
 
 <details>
     <summary> Demo: </summary>
@@ -225,7 +228,9 @@ Injecting JavaScript, sending alerts, text-to-speech notifications and redirecti
 
 
 ##### - Hooking script to integrate with your custom webpages
-The same hooking script that's used to control the mirrored web sessions, can be used externally within any `.html` or `.js` files.
+The same hooking script that's used to control the mirrored web sessions, can be used externally within any `.html` or `.js` file.
+The following example demonstrating using the hook script within a local `.html` page and capturing a login form data: 
+
 
 <details>
     <summary> Demo: </summary>
@@ -245,7 +250,7 @@ The same hooking script that's used to control the mirrored web sessions, can be
 This tool is experimental in its *Alpha* phase. It's developed and published as a small building block of a master's thesis research. So use it for *educational purposes* only and at your own discretion, the author cannot be held responsible for any damages caused.
 
 ##### - How to protect yourself ?
-The tool relays on injecting any web resources with a JavaScript hook that allows us to perform verity of intrusive actions remotely. There are many useful browser extensions and plugins that detect and block such intrusive scripts:
+The tool relies on injecting any web resources with a JavaScript hook that allows us to perform verity of intrusive actions remotely. There are many useful browser extensions and plugins that detect and block such intrusive scripts:
 
 - [uBlock Origin](https://github.com/gorhill/uBlock)
 - [Privacy Badger](https://privacybadger.org/)

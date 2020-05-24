@@ -80,7 +80,9 @@ process.on('SIGINT', beforeExit)
             }
 
             if (process.env.DOCKER) console.log(`Running on: http://${ipAddress}:${port}`)
-            else console.log(parseWelcomeMessage(ipAddress, port, pkg.version, logging, tunnelAddress))
+            else console.log(parseWelcomeMessage(
+                ipAddress.startsWith('0.0') ? '127.0.0.1' : ipAddress,
+                port, pkg.version, logging, tunnelAddress))
 
             global.logging = logging
         })
