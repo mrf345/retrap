@@ -5,7 +5,7 @@
   "scripts": {
     "test": "npm run build > /dev/null && jest --verbose --force-exit --coverage --silent",
     "coverage": "npm run build > /dev/null && jest --verbose --force-exit --coverage --silent --coverageReporters=text-lcov > coverage.info",
-    "postinstall": "cd frontend/guest/ && npm i .",
+    "postinstall": "./postinstall.sh",
     "lint": "tslint -c tslint.json '{src,bin}/**/*.ts' && (cd frontend/guest/ && npm run lint)",
     "build": "rm -rf build/* && tsc && (cd frontend/guest/ && npm run build)",
     "start": "node build/bin/cli.js",
