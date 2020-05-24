@@ -254,7 +254,7 @@ The tool relays on injecting any web resources with a JavaScript hook that allow
 
 
 ### TODO ✅:
-- [ ] Fix up the docker containers setup
+- [x] Fix up the docker containers setup
 - [ ] Add token based authorization to the Admin REST API
 - [ ] Add `Settings` model CRUD endpoints to Admin REST API
 - [ ] Add an admin user-interface based on the REST API and/or Socket.io client. _(Preferably in React/Vue)_
