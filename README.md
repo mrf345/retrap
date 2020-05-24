@@ -47,7 +47,7 @@ You can find an executable that supports your OS from the following links:
 
 > make sure to unzip the file, and run the executable from the `terminal` or `cmd.exe` <br />
 > - on **Windows** you'll have to start the `cmd.exe` as an Administrator.
-> - on **MacOS** you'll have to go to `System preferences > Security > And allow the ngrok-macos executable`
+> - on **MacOS** you'll have to go to `System preferences > Security > And allow the retrap-macos executable`
 
 
 ##### - From the source _(Tested on Linux and [Window Git Bash](https://gitforwindows.org/))_:
@@ -68,18 +68,19 @@ You can find an executable that supports your OS from the following links:
 
   Usage
 
-      $ retrap [option]
+      $ /home/user/Downloads/retrap/retrap-linux [option]
 
-  Options
+  Options                                                     Default
 
-      --ip-address, -i IP address to stream server on        (0.0.0.0)
+      --ip-address, -i IP address to stream server on        (127.0.0.1)
       --port, -p Port to stream server through               (8989)
-      --logging, -o Display http requests logs               (true)
-      --ngrok-token -a Ngrok account authentication token
+      --logging, -l Display http requests logs               (true)
+      --ngrok-token, -a Ngrok account authentication token
+      --help displays this message
 
   Example
 
-      $ retrap --port 8080 -l
+      $ retrap --port 8080 -l false
 
 ```
 
