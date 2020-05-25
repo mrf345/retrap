@@ -68,18 +68,19 @@ You can find an executable that supports your OS from the following links:
 
   Usage
 
-      $ retrap [option]
+      $ /home/user/Downloads/retrap/retrap-linux [option]
 
-  Options
+  Options                                                     Default
 
-      --ip-address, -i IP address to stream server on        (0.0.0.0)
+      --ip-address, -i IP address to stream server on        (127.0.0.1)
       --port, -p Port to stream server through               (8989)
-      --logging, -o Display http requests logs               (true)
-      --ngrok-token -a Ngrok account authentication token
+      --logging, -l Display http requests logs               (true)
+      --ngrok-token, -a Ngrok account authentication token
+      --help displays this message
 
   Example
 
-      $ retrap --port 8080 -l
+      $ retrap --port 8080 -l false
 
 ```
 

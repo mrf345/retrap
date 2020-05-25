@@ -19,20 +19,21 @@ const cli = meow(`
 
         ${command('$')} ${process.execPath} [option]
 
-    ${bold('Options')}
+    ${bold('Options')}                                                     ${bold('Default')}
 
         ${param('--ip-address, -i')} IP address to stream server on        ${note('(127.0.0.1)')}
         ${param('--port, -p')} Port to stream server through               ${note('(8989)')}
-        ${param('--logging, -o')} Display http requests logs               ${note('(true)')}
-        ${param('--ngrok-token', '-a')} Ngrok account authentication token
+        ${param('--logging, -l')} Display http requests logs               ${note('(true)')}
+        ${param('--ngrok-token, -a')} Ngrok account authentication token
+        ${param('--help')} displays this message
 
     ${bold('Example')}
 
-        ${command('$')} ${pkg.name} ${command('--port')} 8080 ${command('-l')}
+        ${command('$')} ${pkg.name} ${command('--port')} 8080 ${command('-l')} false
 `, {flags: {
         ipAddress: {type: 'string', alias: 'i', default: '127.0.0.1'},
         port: {type: 'number', alias: 'p', default: 8989},
-        logging: {type: 'boolean', alias: 'o', default: true},
+        logging: {type: 'boolean', alias: 'l', default: true},
         ngrokToken: {type: 'string', alias: 'a', default: ''}
     }
 })
