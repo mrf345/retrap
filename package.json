@@ -75,7 +75,7 @@
     "socket.io": "^2.3.0",
     "swagger-jsdoc": "^4.0.0",
     "swagger-ui-express": "^4.1.4",
-    "ua-parser-js": "^0.7.21",
+    "ua-parser-js": "^0.7.24",
     "uuidv4": "^6.0.7"
   }
 }
